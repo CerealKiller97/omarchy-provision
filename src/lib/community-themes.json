@@ -1,0 +1,1027 @@
+{
+	"source": "omacom/omarchy-site@master/themes/index.html",
+	"themes": [
+		{
+			"name": "Aetheria",
+			"slug": "aetheria",
+			"author": "JJDizz1L",
+			"url": "https://github.com/JJDizz1L/aetheria",
+			"image": "/assets/themes/aetheria.webp"
+		},
+		{
+			"name": "All Hallow's Eve",
+			"slug": "all-hallows-eve",
+			"author": "guilhermetk",
+			"url": "https://github.com/guilhermetk/omarchy-all-hallows-eve-theme",
+			"image": "/assets/themes/all-hallow-s-eve.webp"
+		},
+		{
+			"name": "Amberbyte",
+			"slug": "amberbyte",
+			"author": "tahfizhabib",
+			"url": "https://github.com/tahfizhabib/omarchy-amberbyte-theme",
+			"image": "/assets/themes/amberbyte.webp"
+		},
+		{
+			"name": "Arc Blueberry",
+			"slug": "arc-blueberry",
+			"author": "vale-c",
+			"url": "https://github.com/vale-c/omarchy-arc-blueberry",
+			"image": "/assets/themes/arc-blueberry.webp"
+		},
+		{
+			"name": "Archwave",
+			"slug": "archwave",
+			"author": "davidguttman",
+			"url": "https://github.com/davidguttman/archwave",
+			"image": "/assets/themes/archwave.webp"
+		},
+		{
+			"name": "Artzen",
+			"slug": "artzen",
+			"author": "tahfizhabib",
+			"url": "https://github.com/tahfizhabib/omarchy-artzen-theme",
+			"image": "/assets/themes/artzen.webp"
+		},
+		{
+			"name": "Ash",
+			"slug": "ash",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-ash-theme",
+			"image": "/assets/themes/ash.webp"
+		},
+		{
+			"name": "Atelier",
+			"slug": "atelier",
+			"author": "atif-1402",
+			"url": "https://github.com/atif-1402/omarchy-atelier-theme",
+			"image": "/assets/themes/atelier.webp"
+		},
+		{
+			"name": "Aura",
+			"slug": "aura",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-aura-theme",
+			"image": "/assets/themes/aura.webp"
+		},
+		{
+			"name": "Ayaka",
+			"slug": "ayaka",
+			"author": "abhijeet-swami",
+			"url": "https://github.com/abhijeet-swami/omarchy-ayaka-theme",
+			"image": "/assets/themes/ayaka.webp"
+		},
+		{
+			"name": "Azure Glow",
+			"slug": "azure-glow",
+			"author": "Hydradevx",
+			"url": "https://github.com/Hydradevx/omarchy-azure-glow-theme",
+			"image": "/assets/themes/azure-glow.webp"
+		},
+		{
+			"name": "Batman",
+			"slug": "batman",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-batman-theme",
+			"image": "/assets/themes/batman.webp"
+		},
+		{
+			"name": "Batou",
+			"slug": "batou",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-batou-theme",
+			"image": "/assets/themes/batou.webp"
+		},
+		{
+			"name": "Bauhaus",
+			"slug": "bauhaus",
+			"author": "somerocketeer",
+			"url": "https://github.com/somerocketeer/omarchy-bauhaus-theme",
+			"image": "/assets/themes/bauhaus.webp"
+		},
+		{
+			"name": "Biscuit de Mar Dark",
+			"slug": "biscuit-de-mar-dark",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-biscuit-de-mar-dark-theme",
+			"image": "/assets/themes/biscuit-de-mar-dark.webp"
+		},
+		{
+			"name": "Black Arch",
+			"slug": "black_arch",
+			"author": "ankur311sudo",
+			"url": "https://github.com/ankur311sudo/black_arch",
+			"image": "/assets/themes/black-arch.webp"
+		},
+		{
+			"name": "Black Gold",
+			"slug": "blackgold",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-blackgold-theme",
+			"image": "/assets/themes/black-gold.webp"
+		},
+		{
+			"name": "Black Sand",
+			"slug": "black-sand",
+			"author": "pkovzz",
+			"url": "https://github.com/pkovzz/omarchy-black-sand-theme",
+			"image": "/assets/themes/black-sand.webp"
+		},
+		{
+			"name": "Black Turq",
+			"slug": "blackturq",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-blackturq-theme",
+			"image": "/assets/themes/black-turq.webp"
+		},
+		{
+			"name": "Blue Ridge Dark",
+			"slug": "blueridge-dark",
+			"author": "hipsterusername",
+			"url": "https://github.com/hipsterusername/omarchy-blueridge-dark-theme",
+			"image": "/assets/themes/blue-ridge-dark.webp"
+		},
+		{
+			"name": "bluedotrb",
+			"slug": "bluedotrb",
+			"author": "dotsilva",
+			"url": "https://github.com/dotsilva/omarchy-bluedotrb-theme",
+			"image": "/assets/themes/bluedotrb.webp"
+		},
+		{
+			"name": "Castle on a Lake",
+			"slug": "castle-on-a-lake",
+			"author": "shmall03",
+			"url": "https://github.com/shmall03/omarchy-castle-on-a-lake-theme",
+			"image": "/assets/themes/castle-on-a-lake.webp"
+		},
+		{
+			"name": "Catppuccin Mocha Dark",
+			"slug": "catppuccin-dark",
+			"author": "Luquatic",
+			"url": "https://github.com/Luquatic/omarchy-catppuccin-dark",
+			"image": "/assets/themes/catppuccin-mocha-dark.webp"
+		},
+		{
+			"name": "Cincinnati",
+			"slug": "cincinnati",
+			"author": "jkwuc89",
+			"url": "https://github.com/jkwuc89/omarchy-cincinnati-theme",
+			"image": "/assets/themes/cincinnati.webp"
+		},
+		{
+			"name": "Citrus Cynapse",
+			"slug": "citrus-cynapse",
+			"author": "Grey-007",
+			"url": "https://github.com/Grey-007/citrus-cynapse",
+			"image": "/assets/themes/citrus-cynapse.webp"
+		},
+		{
+			"name": "City-783",
+			"slug": "city-783",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-city-783-theme",
+			"image": "/assets/themes/city-783.webp"
+		},
+		{
+			"name": "Cobalt2",
+			"slug": "cobalt2",
+			"author": "hoblin",
+			"url": "https://github.com/hoblin/omarchy-cobalt2-theme",
+			"image": "/assets/themes/cobalt2.webp"
+		},
+		{
+			"name": "Coffee",
+			"slug": "coffee",
+			"author": "megabyte0x",
+			"url": "https://github.com/megabyte0x/omarchy-coffee-theme",
+			"image": "/assets/themes/coffee.webp"
+		},
+		{
+			"name": "Coffee Latte",
+			"slug": "coffee-latte",
+			"author": "megabyte0x",
+			"url": "https://github.com/megabyte0x/omarchy-coffee-latte-theme",
+			"image": "/assets/themes/coffee-latte.webp"
+		},
+		{
+			"name": "Commit",
+			"slug": "commit",
+			"author": "c0ze",
+			"url": "https://github.com/c0ze/omarchy-commit-theme",
+			"image": "/assets/themes/commit.webp"
+		},
+		{
+			"name": "CpUnk",
+			"slug": "cpunk",
+			"author": "stannorbvb-cmd",
+			"url": "https://github.com/stannorbvb-cmd/cpunk",
+			"image": "/assets/themes/cpunk.webp"
+		},
+		{
+			"name": "Crimson Gold",
+			"slug": "crimson-gold",
+			"author": "knappkevin",
+			"url": "https://github.com/knappkevin/omarchy-crimson-gold-theme",
+			"image": "/assets/themes/crimson-gold.webp"
+		},
+		{
+			"name": "Darcula",
+			"slug": "darcula",
+			"author": "noahljungberg",
+			"url": "https://github.com/noahljungberg/omarchy-darcula-theme",
+			"image": "/assets/themes/darcula.webp"
+		},
+		{
+			"name": "Demon",
+			"slug": "demon",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-demon-theme",
+			"image": "/assets/themes/demon.webp"
+		},
+		{
+			"name": "Dos Moos",
+			"slug": "dos-moos",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-dos-moos-theme",
+			"image": "/assets/themes/dos-moos.webp"
+		},
+		{
+			"name": "Dotrb",
+			"slug": "dotrb",
+			"author": "dotsilva",
+			"url": "https://github.com/dotsilva/omarchy-dotrb-theme",
+			"image": "/assets/themes/dotrb.webp"
+		},
+		{
+			"name": "Drac",
+			"slug": "drac",
+			"author": "ShehabShaef",
+			"url": "https://github.com/ShehabShaef/omarchy-drac-theme",
+			"image": "/assets/themes/drac.webp"
+		},
+		{
+			"name": "Dracula",
+			"slug": "dracula",
+			"author": "catlee",
+			"url": "https://github.com/catlee/omarchy-dracula-theme",
+			"image": "/assets/themes/dracula.webp"
+		},
+		{
+			"name": "Eldritch",
+			"slug": "omarchy",
+			"author": "eldritch-theme",
+			"url": "https://github.com/eldritch-theme/omarchy",
+			"image": "/assets/themes/eldritch.webp"
+		},
+		{
+			"name": "Event Horizon",
+			"slug": "event-horizon",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-event-horizon-theme",
+			"image": "/assets/themes/event-horizon.webp"
+		},
+		{
+			"name": "Evergarden",
+			"slug": "evergarden",
+			"author": "celsobenedetti",
+			"url": "https://github.com/celsobenedetti/omarchy-evergarden",
+			"image": "/assets/themes/evergarden.webp"
+		},
+		{
+			"name": "Felix",
+			"slug": "felix",
+			"author": "TyRichards",
+			"url": "https://github.com/TyRichards/omarchy-felix-theme",
+			"image": "/assets/themes/felix.webp"
+		},
+		{
+			"name": "Fireside",
+			"slug": "fireside",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-fireside-theme",
+			"image": "/assets/themes/fireside.webp"
+		},
+		{
+			"name": "Flat Dracula",
+			"slug": "flat-dracula",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-flat-dracula-theme",
+			"image": "/assets/themes/flat-dracula.webp"
+		},
+		{
+			"name": "Flexoki Dark",
+			"slug": "flexoki-dark",
+			"author": "euandeas",
+			"url": "https://github.com/euandeas/omarchy-flexoki-dark-theme",
+			"image": "/assets/themes/flexoki-dark.webp"
+		},
+		{
+			"name": "Forest Green",
+			"slug": "forest-green",
+			"author": "abhijeet-swami",
+			"url": "https://github.com/abhijeet-swami/omarchy-forest-green-theme",
+			"image": "/assets/themes/forest-green.webp"
+		},
+		{
+			"name": "Frost",
+			"slug": "frost",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-frost-theme",
+			"image": "/assets/themes/frost.webp"
+		},
+		{
+			"name": "fuchsblau",
+			"slug": "fuchsblau",
+			"author": "fuchsblau",
+			"url": "https://github.com/fuchsblau/omarchy-fuchsblau-theme",
+			"image": "/assets/themes/fuchsblau.webp"
+		},
+		{
+			"name": "Futurism",
+			"slug": "futurism",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-futurism-theme",
+			"image": "/assets/themes/futurism.webp"
+		},
+		{
+			"name": "Futurist",
+			"slug": "futurist",
+			"author": "benwillems",
+			"url": "https://github.com/benwillems/omarchy-futurist-theme",
+			"image": "/assets/themes/futurist.webp"
+		},
+		{
+			"name": "Gand",
+			"slug": "gand",
+			"author": "c0ze",
+			"url": "https://github.com/c0ze/omarchy-gand-theme",
+			"image": "/assets/themes/gand.webp"
+		},
+		{
+			"name": "Ghost Pastel",
+			"slug": "ghost-pastel",
+			"author": "row-huh",
+			"url": "https://github.com/row-huh/omarchy-ghost-pastel-theme",
+			"image": "/assets/themes/ghost-pastel.webp"
+		},
+		{
+			"name": "Gold Rush",
+			"slug": "gold-rush",
+			"author": "tahayvr",
+			"url": "https://github.com/tahayvr/omarchy-gold-rush-theme",
+			"image": "/assets/themes/gold-rush.webp"
+		},
+		{
+			"name": "Golden Brown",
+			"slug": "golden-brown",
+			"author": "atif-1402",
+			"url": "https://github.com/atif-1402/omarchy-golden-brown-theme",
+			"image": "/assets/themes/golden-brown.webp"
+		},
+		{
+			"name": "Greek Noir",
+			"slug": "greek-noir",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-greek-noir-theme",
+			"image": "/assets/themes/greek-noir.webp"
+		},
+		{
+			"name": "Green Garden",
+			"slug": "green-garden",
+			"author": "kalk-ak",
+			"url": "https://github.com/kalk-ak/omarchy-green-garden-theme",
+			"image": "/assets/themes/green-garden.webp"
+		},
+		{
+			"name": "Gruvbox Material",
+			"slug": "gruvbox-material",
+			"author": "curbol",
+			"url": "https://github.com/curbol/omarchy-gruvbox-material",
+			"image": "/assets/themes/gruvbox-material.webp"
+		},
+		{
+			"name": "Gruvu",
+			"slug": "gruvu",
+			"author": "ankur311sudo",
+			"url": "https://github.com/ankur311sudo/gruvu",
+			"image": "/assets/themes/gruvu.webp"
+		},
+		{
+			"name": "Harbor",
+			"slug": "harbor",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-harbor-theme",
+			"image": "/assets/themes/harbor.webp"
+		},
+		{
+			"name": "Harbor Dark",
+			"slug": "harbordark",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-harbordark-theme",
+			"image": "/assets/themes/harbor-dark.webp"
+		},
+		{
+			"name": "Hermarchy",
+			"slug": "hermarchy",
+			"author": "archer-clawbot",
+			"url": "https://github.com/archer-clawbot/omarchy-hermarchy-theme",
+			"image": "/assets/themes/hermarchy.webp"
+		},
+		{
+			"name": "Hinterlands",
+			"slug": "hinterlands",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-hinterlands-theme",
+			"image": "/assets/themes/hinterlands.webp"
+		},
+		{
+			"name": "Infernium",
+			"slug": "infernium-dark",
+			"author": "RiO7MAKK3R",
+			"url": "https://github.com/RiO7MAKK3R/omarchy-infernium-dark-theme",
+			"image": "/assets/themes/infernium.webp"
+		},
+		{
+			"name": "Inky Pinky",
+			"slug": "inkypinky",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-inkypinky-theme",
+			"image": "/assets/themes/inky-pinky.webp"
+		},
+		{
+			"name": "Japan Night",
+			"slug": "japan-night",
+			"author": "devgtv",
+			"url": "https://github.com/devgtv/omarchy-japan-night-theme",
+			"image": "/assets/themes/japan-night.webp"
+		},
+		{
+			"name": "Lamplight",
+			"slug": "lamplight",
+			"author": "thisisgm",
+			"url": "https://github.com/thisisgm/omarchy-lamplight-theme",
+			"image": "/assets/themes/lamplight.webp"
+		},
+		{
+			"name": "Lawson Night",
+			"slug": "lawson-night",
+			"author": "phuclh",
+			"url": "https://github.com/phuclh/omarchy-lawson-night-theme",
+			"image": "/assets/themes/lawson-night.webp"
+		},
+		{
+			"name": "Map Quest",
+			"slug": "mapquest",
+			"author": "ItsABigIgloo",
+			"url": "https://github.com/ItsABigIgloo/omarchy-mapquest-theme",
+			"image": "/assets/themes/map-quest.webp"
+		},
+		{
+			"name": "Mars",
+			"slug": "mars",
+			"author": "steve-lohmeyer",
+			"url": "https://github.com/steve-lohmeyer/omarchy-mars-theme",
+			"image": "/assets/themes/mars.webp"
+		},
+		{
+			"name": "Matrix",
+			"slug": "matrix",
+			"author": "BVisagie",
+			"url": "https://github.com/BVisagie/omarchy-matrix-theme",
+			"image": "/assets/themes/matrix.webp"
+		},
+		{
+			"name": "Mechanoonna",
+			"slug": "mechanoonna",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-mechanoonna-theme",
+			"image": "/assets/themes/mechanoonna.webp"
+		},
+		{
+			"name": "Midnight",
+			"slug": "midnight",
+			"author": "JaxonWright",
+			"url": "https://github.com/JaxonWright/omarchy-midnight-theme",
+			"image": "/assets/themes/midnight.webp"
+		},
+		{
+			"name": "Milky Matcha",
+			"slug": "milkmatcha-light",
+			"author": "hipsterusername",
+			"url": "https://github.com/hipsterusername/omarchy-milkmatcha-light-theme",
+			"image": "/assets/themes/milky-matcha.webp"
+		},
+		{
+			"name": "Mini Jcw",
+			"slug": "mini-jcw",
+			"author": "davydotcom",
+			"url": "https://github.com/davydotcom/omarchy-mini-jcw-theme",
+			"image": "/assets/themes/mini-jcw.webp"
+		},
+		{
+			"name": "Monochrome",
+			"slug": "monochrome",
+			"author": "Swarnim114",
+			"url": "https://github.com/Swarnim114/omarchy-monochrome-theme",
+			"image": "/assets/themes/monochrome.webp"
+		},
+		{
+			"name": "Monokai",
+			"slug": "monokai",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-monokai-theme",
+			"image": "/assets/themes/monokai.webp"
+		},
+		{
+			"name": "Moodpeak",
+			"slug": "moodpeak",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-moodpeak-theme",
+			"image": "/assets/themes/moodpeak.webp"
+		},
+		{
+			"name": "Nagai Poolside",
+			"slug": "nagai-poolside",
+			"author": "somerocketeer",
+			"url": "https://github.com/somerocketeer/omarchy-nagai-poolside-theme",
+			"image": "/assets/themes/nagai-poolside.webp"
+		},
+		{
+			"name": "Naysayer",
+			"slug": "naysayer",
+			"author": "brianblakely",
+			"url": "https://github.com/brianblakely/omarchy-naysayer-theme",
+			"image": "/assets/themes/naysayer.webp"
+		},
+		{
+			"name": "Neo Sploosh",
+			"slug": "neo-sploosh",
+			"author": "monoooki",
+			"url": "https://github.com/monoooki/omarchy-neo-sploosh-theme",
+			"image": "/assets/themes/neo-sploosh.webp"
+		},
+		{
+			"name": "Neon Dusk",
+			"slug": "neon-dusk",
+			"author": "daniel-felipe",
+			"url": "https://github.com/daniel-felipe/omarchy-neon-dusk-theme",
+			"image": "/assets/themes/neon-dusk.webp"
+		},
+		{
+			"name": "Neovoid",
+			"slug": "neovoid",
+			"author": "RiO7MAKK3R",
+			"url": "https://github.com/RiO7MAKK3R/omarchy-neovoid-theme",
+			"image": "/assets/themes/neovoid.webp"
+		},
+		{
+			"name": "Neptune Blue",
+			"slug": "neptune-blue",
+			"author": "davydotcom",
+			"url": "https://github.com/davydotcom/omarchy-neptune-blue-theme",
+			"image": "/assets/themes/neptune-blue.webp"
+		},
+		{
+			"name": "NES",
+			"slug": "nes",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-nes-theme",
+			"image": "/assets/themes/nes.webp"
+		},
+		{
+			"name": "Noir",
+			"slug": "noir",
+			"author": "tahadx",
+			"url": "https://github.com/tahadx/omarchy-noir-theme",
+			"image": "/assets/themes/noir.webp"
+		},
+		{
+			"name": "Nujabes",
+			"slug": "nujabes",
+			"author": "HalmyLyseas",
+			"url": "https://github.com/HalmyLyseas/omarchy-nujabes-theme",
+			"image": "/assets/themes/nujabes.webp"
+		},
+		{
+			"name": "Oligarchy",
+			"slug": "oligarchy",
+			"author": "EF-Code",
+			"url": "https://github.com/EF-Code/omarchy-oligarchy-theme",
+			"image": "/assets/themes/oligarchy.webp"
+		},
+		{
+			"name": "Omacarchy",
+			"slug": "omacarchy",
+			"author": "RiO7MAKK3R",
+			"url": "https://github.com/RiO7MAKK3R/omarchy-omacarchy-theme",
+			"image": "/assets/themes/omacarchy.webp"
+		},
+		{
+			"name": "OmaLED",
+			"slug": "omaled",
+			"author": "brianblakely",
+			"url": "https://github.com/brianblakely/omarchy-omaled-theme",
+			"image": "/assets/themes/omaled.webp"
+		},
+		{
+			"name": "One Dark",
+			"slug": "one-dark",
+			"author": "joaopinto15",
+			"url": "https://github.com/joaopinto15/omarchy-one-dark-theme",
+			"image": "/assets/themes/one-dark.webp"
+		},
+		{
+			"name": "One Dark Pro",
+			"slug": "one-dark-pro",
+			"author": "sc0ttman",
+			"url": "https://github.com/sc0ttman/omarchy-one-dark-pro-theme",
+			"image": "/assets/themes/one-dark-pro.webp"
+		},
+		{
+			"name": "Oxo Carbon",
+			"slug": "oxocarbon",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-oxocarbon-theme",
+			"image": "/assets/themes/oxo-carbon.webp"
+		},
+		{
+			"name": "Pagan",
+			"slug": "pagan",
+			"author": "c0ze",
+			"url": "https://github.com/c0ze/omarchy-pagan-theme",
+			"image": "/assets/themes/pagan.webp"
+		},
+		{
+			"name": "Pandora",
+			"slug": "pandora",
+			"author": "imbypass",
+			"url": "https://github.com/imbypass/omarchy-pandora-theme",
+			"image": "/assets/themes/pandora.webp"
+		},
+		{
+			"name": "Periphery",
+			"slug": "periphery",
+			"author": "r-bart",
+			"url": "https://github.com/r-bart/omarchy-periphery-theme",
+			"image": "/assets/themes/periphery.webp"
+		},
+		{
+			"name": "Pina",
+			"slug": "pina",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-pina-theme",
+			"image": "/assets/themes/pina.webp"
+		},
+		{
+			"name": "Pink Blood",
+			"slug": "pink-blood-omarchy",
+			"author": "ITSZXY",
+			"url": "https://github.com/ITSZXY/pink-blood-omarchy-theme",
+			"image": "/assets/themes/pink-blood.webp"
+		},
+		{
+			"name": "Pulsar",
+			"slug": "pulsar",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-pulsar-theme",
+			"image": "/assets/themes/pulsar.webp"
+		},
+		{
+			"name": "Purple Moon",
+			"slug": "purple-moon",
+			"author": "Grey-007",
+			"url": "https://github.com/Grey-007/purple-moon",
+			"image": "/assets/themes/purple-moon.webp"
+		},
+		{
+			"name": "Purplewave",
+			"slug": "purplewave",
+			"author": "dotsilva",
+			"url": "https://github.com/dotsilva/omarchy-purplewave-theme",
+			"image": "/assets/themes/purplewave.webp"
+		},
+		{
+			"name": "Quattrocento Light",
+			"slug": "quattrocento-light",
+			"author": "r-bart",
+			"url": "https://github.com/r-bart/omarchy-quattrocento-light-theme",
+			"image": "/assets/themes/quattrocento-light.webp"
+		},
+		{
+			"name": "Rainy Night",
+			"slug": "rainynight",
+			"author": "atif-1402",
+			"url": "https://github.com/atif-1402/omarchy-rainynight-theme",
+			"image": "/assets/themes/rainy-night.webp"
+		},
+		{
+			"name": "Red Monarch",
+			"slug": "red-monarch",
+			"author": "kamatealif",
+			"url": "https://github.com/kamatealif/omarchy-red-monarch-theme",
+			"image": "/assets/themes/red-monarch.webp"
+		},
+		{
+			"name": "Red Pill",
+			"slug": "red-pill",
+			"author": "ferlemes",
+			"url": "https://github.com/ferlemes/omarchy-red-pill-theme",
+			"image": "/assets/themes/red-pill.webp"
+		},
+		{
+			"name": "RetroPC",
+			"slug": "retropc",
+			"author": "rondilley",
+			"url": "https://github.com/rondilley/omarchy-retropc-theme",
+			"image": "/assets/themes/retropc.webp"
+		},
+		{
+			"name": "Ristretto Light",
+			"slug": "ristretto-light",
+			"author": "brokkoli71",
+			"url": "https://github.com/brokkoli71/omarchy-ristretto-light-theme",
+			"image": "/assets/themes/ristretto-light.webp"
+		},
+		{
+			"name": "RobZee84",
+			"slug": "robzee84",
+			"author": "robzolkos",
+			"url": "https://github.com/robzolkos/omarchy-robzee84-theme",
+			"image": "/assets/themes/robzee84.webp"
+		},
+		{
+			"name": "Rose of Dune",
+			"slug": "roseofdune",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-roseofdune-theme",
+			"image": "/assets/themes/rose-of-dune.webp"
+		},
+		{
+			"name": "Rose Pine Dark",
+			"slug": "rose-pine-dark",
+			"author": "guilhermetk",
+			"url": "https://github.com/guilhermetk/omarchy-rose-pine-dark",
+			"image": "/assets/themes/rose-pine-dark.webp"
+		},
+		{
+			"name": "Rose Pine Moon",
+			"slug": "rose-pine-moon",
+			"author": "Memnoc",
+			"url": "https://github.com/Memnoc/omarchy-rose-pine-moon-theme",
+			"image": "/assets/themes/rose-pine-moon.webp"
+		},
+		{
+			"name": "Ryu",
+			"slug": "ryu",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-ryu-theme",
+			"image": "/assets/themes/ryu.webp"
+		},
+		{
+			"name": "Saga",
+			"slug": "saga",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-saga-theme",
+			"image": "/assets/themes/saga.webp"
+		},
+		{
+			"name": "Sakura",
+			"slug": "sakura",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-sakura-theme",
+			"image": "/assets/themes/sakura.webp"
+		},
+		{
+			"name": "Sakura Mochi",
+			"slug": "sakura-mochi",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-sakura-mochi-theme",
+			"image": "/assets/themes/sakura-mochi.webp"
+		},
+		{
+			"name": "Sapphire",
+			"slug": "sapphire",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-sapphire-theme",
+			"image": "/assets/themes/sapphire.webp"
+		},
+		{
+			"name": "Shades of Jade",
+			"slug": "shadesofjade",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-shadesofjade-theme",
+			"image": "/assets/themes/shades-of-jade.webp"
+		},
+		{
+			"name": "Snow",
+			"slug": "snow",
+			"author": "bjarneo",
+			"url": "https://github.com/bjarneo/omarchy-snow-theme",
+			"image": "/assets/themes/snow.webp"
+		},
+		{
+			"name": "Snow Black",
+			"slug": "snow_black",
+			"author": "ankur311sudo",
+			"url": "https://github.com/ankur311sudo/snow_black",
+			"image": "/assets/themes/snow-black.webp"
+		},
+		{
+			"name": "Solarized",
+			"slug": "solarized",
+			"author": "Gazler",
+			"url": "https://github.com/Gazler/omarchy-solarized-theme",
+			"image": "/assets/themes/solarized.webp"
+		},
+		{
+			"name": "Solarized Light",
+			"slug": "solarized-light",
+			"author": "dfrico",
+			"url": "https://github.com/dfrico/omarchy-solarized-light-theme",
+			"image": "/assets/themes/solarized-light.webp"
+		},
+		{
+			"name": "Solarized Osaka",
+			"slug": "solarizedosaka",
+			"author": "motorsss",
+			"url": "https://github.com/motorsss/omarchy-solarizedosaka-theme",
+			"image": "/assets/themes/solarized-osaka.webp"
+		},
+		{
+			"name": "Space Monkey",
+			"slug": "space-monkey",
+			"author": "TyRichards",
+			"url": "https://github.com/TyRichards/omarchy-space-monkey-theme",
+			"image": "/assets/themes/space-monkey.webp"
+		},
+		{
+			"name": "Starry Night",
+			"slug": "starry-night",
+			"author": "juangalt",
+			"url": "https://github.com/juangalt/omarchy-starry-night-theme",
+			"image": "/assets/themes/starry-night.webp"
+		},
+		{
+			"name": "Starsend",
+			"slug": "starsend",
+			"author": "r-bart",
+			"url": "https://github.com/r-bart/omarchy-starsend-theme",
+			"image": "/assets/themes/starsend.webp"
+		},
+		{
+			"name": "Sunset",
+			"slug": "sunset",
+			"author": "rondilley",
+			"url": "https://github.com/rondilley/omarchy-sunset-theme",
+			"image": "/assets/themes/sunset.webp"
+		},
+		{
+			"name": "Sunset Drive",
+			"slug": "sunset-drive",
+			"author": "tahayvr",
+			"url": "https://github.com/tahayvr/omarchy-sunset-drive-theme",
+			"image": "/assets/themes/sunset-drive.webp"
+		},
+		{
+			"name": "Super Game Bro",
+			"slug": "super-game-bro",
+			"author": "TyRichards",
+			"url": "https://github.com/TyRichards/omarchy-super-game-bro-theme",
+			"image": "/assets/themes/super-game-bro.webp"
+		},
+		{
+			"name": "Synthwave '84",
+			"slug": "synthwave84",
+			"author": "omacom-io",
+			"url": "https://github.com/omacom-io/omarchy-synthwave84-theme",
+			"image": "/assets/themes/synthwave-84.webp"
+		},
+		{
+			"name": "Temerald",
+			"slug": "temerald",
+			"author": "Ahmad-Mtr",
+			"url": "https://github.com/Ahmad-Mtr/omarchy-temerald-theme",
+			"image": "/assets/themes/temerald.webp"
+		},
+		{
+			"name": "Terminus",
+			"slug": "terminus",
+			"author": "r-bart",
+			"url": "https://github.com/r-bart/omarchy-terminus-theme",
+			"image": "/assets/themes/terminus.webp"
+		},
+		{
+			"name": "The Greek",
+			"slug": "thegreek",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-thegreek-theme",
+			"image": "/assets/themes/the-greek.webp"
+		},
+		{
+			"name": "Tokyo Night OLED",
+			"slug": "tokyoled",
+			"author": "Justin-De-Sio",
+			"url": "https://github.com/Justin-De-Sio/omarchy-tokyoled-theme",
+			"image": "/assets/themes/tokyo-night-oled.webp"
+		},
+		{
+			"name": "Tycho",
+			"slug": "tycho",
+			"author": "leonardobetti",
+			"url": "https://github.com/leonardobetti/omarchy-tycho",
+			"image": "/assets/themes/tycho.webp"
+		},
+		{
+			"name": "Van Gogh",
+			"slug": "van-gogh",
+			"author": "Nirmal314",
+			"url": "https://github.com/Nirmal314/omarchy-van-gogh-theme",
+			"image": "/assets/themes/van-gogh.webp"
+		},
+		{
+			"name": "Vault",
+			"slug": "vault",
+			"author": "r-bart",
+			"url": "https://github.com/r-bart/omarchy-vault-theme",
+			"image": "/assets/themes/vault.webp"
+		},
+		{
+			"name": "Velvet Night",
+			"slug": "velvetnight",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-velvetnight-theme",
+			"image": "/assets/themes/velvet-night.webp"
+		},
+		{
+			"name": "Venice from Above",
+			"slug": "venice-from-above-omarchy",
+			"author": "mattbbia",
+			"url": "https://github.com/mattbbia/venice-from-above-omarchy",
+			"image": "/assets/themes/venice-from-above.webp"
+		},
+		{
+			"name": "Vesper",
+			"slug": "vesper",
+			"author": "thmoee",
+			"url": "https://github.com/thmoee/omarchy-vesper-theme",
+			"image": "/assets/themes/vesper.webp"
+		},
+		{
+			"name": "VHS 80",
+			"slug": "vhs80",
+			"author": "tahayvr",
+			"url": "https://github.com/tahayvr/omarchy-vhs80-theme",
+			"image": "/assets/themes/vhs-80.webp"
+		},
+		{
+			"name": "Void",
+			"slug": "void",
+			"author": "vyrx-dev",
+			"url": "https://github.com/vyrx-dev/omarchy-void-theme",
+			"image": "/assets/themes/void.webp"
+		},
+		{
+			"name": "Vulkanite",
+			"slug": "vulkanite",
+			"author": "kyerpotts",
+			"url": "https://github.com/kyerpotts/omarchy-vulkanite-theme",
+			"image": "/assets/themes/vulkanite.webp"
+		},
+		{
+			"name": "Waffle Cat",
+			"slug": "waffle-cat",
+			"author": "OldJobobo",
+			"url": "https://github.com/OldJobobo/omarchy-waffle-cat-theme",
+			"image": "/assets/themes/waffle-cat.webp"
+		},
+		{
+			"name": "Waveform Dark",
+			"slug": "waveform-dark",
+			"author": "hipsterusername",
+			"url": "https://github.com/hipsterusername/omarchy-waveform-dark-theme",
+			"image": "/assets/themes/waveform-dark.webp"
+		},
+		{
+			"name": "White Gold",
+			"slug": "whitegold",
+			"author": "HANCORE-linux",
+			"url": "https://github.com/HANCORE-linux/omarchy-whitegold-theme",
+			"image": "/assets/themes/white-gold.webp"
+		},
+		{
+			"name": "Windows Dark Mode",
+			"slug": "windows-dark-mode",
+			"author": "oldjobobo",
+			"url": "https://github.com/oldjobobo/omarchy-windows-dark-mode-theme",
+			"image": "/assets/themes/windows-dark-mode.webp"
+		},
+		{
+			"name": "Winslow",
+			"slug": "winslow",
+			"author": "chipkoziara",
+			"url": "https://github.com/chipkoziara/omarchy-winslow-theme",
+			"image": "/assets/themes/winslow.webp"
+		}
+	]
+}
