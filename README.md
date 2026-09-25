@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme-banner-dark.png">
+  <img alt="Omarchy Provision: Omarchy is fast. Your setup is even faster. Pick your theme, apps and tools once, export a validated omarchy.yml and let it provision the rest." src="docs/readme-banner-light.png">
+</picture>
+
 # Omarchy Provision
 
 A static SvelteKit + [shadcn-svelte](https://shadcn-svelte.com) site that builds an
@@ -63,3 +68,8 @@ makes `omarchy webapp install` fetch the site's own icon.
 1200×630 social card. Run `pnpm brand` to regenerate `favicon.ico`, `apple-touch-icon.png` and `og.png`
 (needs `rsvg-convert`, ImageMagick and a Chromium-based browser). Site copy and the author link live in
 `src/lib/site.ts`; the deploy workflow sets `VITE_SITE_URL` so Open Graph URLs are absolute.
+
+The README banner (`docs/readme-banner-{light,dark}.png`, 1280×640 at 2x) is
+`scripts/brand/readme-banner.html` with a live screenshot of the built site. Run `pnpm brand:readme`
+to rebuild it after UI changes; it builds the site, serves it locally and captures both color modes.
+The dark banner also works as the repository's social preview (Settings → General → Social preview).

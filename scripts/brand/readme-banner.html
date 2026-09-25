@@ -1,0 +1,177 @@
+<!doctype html>
+<!--
+  Template for docs/readme-banner-{light,dark}.png (1280×640, GitHub's social preview size).
+  Placeholders are filled by scripts/brand/render-readme.sh; regenerate with: pnpm brand:readme
+-->
+<html lang="en" data-mode="{{MODE}}">
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			@font-face {
+				font-family: 'Geist';
+				src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2') format('woff2');
+				font-weight: 100 900;
+			}
+			@font-face {
+				font-family: 'Fira Code';
+				src: url('../../node_modules/@fontsource-variable/fira-code/files/fira-code-latin-wght-normal.woff2') format('woff2');
+				font-weight: 300 700;
+			}
+			:root {
+				--bg: #ffffff;
+				--fg: #111827;
+				--muted: #6b7280;
+				--dim: #9ca3af;
+				--border: #e5e7eb;
+				--chip: #f9fafb;
+				--mark-bg: #000000;
+				--mark-fg: #ffffff;
+				--success: #16a34a;
+				--shadow: 0 32px 80px rgba(17, 24, 39, 0.16);
+			}
+			[data-mode='dark'] {
+				--bg: #0a0a0a;
+				--fg: #f3f4f6;
+				--muted: #9ca3af;
+				--dim: #6b7280;
+				--border: #262626;
+				--chip: #111111;
+				--mark-bg: #ffffff;
+				--mark-fg: #000000;
+				--success: #4ade80;
+				--shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+			}
+			* {
+				box-sizing: border-box;
+				margin: 0;
+			}
+			html,
+			body {
+				width: 1280px;
+				height: 640px;
+				overflow: hidden;
+			}
+			body {
+				position: relative;
+				background: var(--bg);
+				color: var(--fg);
+				font-family: 'Geist', sans-serif;
+				-webkit-font-smoothing: antialiased;
+			}
+			.copy {
+				position: absolute;
+				inset: 64px auto 64px 72px;
+				width: 520px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				font-size: 22px;
+				font-weight: 600;
+				letter-spacing: -0.01em;
+			}
+			.brand svg {
+				width: 40px;
+				height: 40px;
+			}
+			h1 {
+				font-size: 56px;
+				line-height: 1.05;
+				font-weight: 650;
+				letter-spacing: -0.035em;
+			}
+			h1 .dim {
+				display: block;
+				color: var(--dim);
+			}
+			p {
+				margin-top: 20px;
+				font-size: 20px;
+				line-height: 1.45;
+				color: var(--muted);
+			}
+			.chips {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+			.chip {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				height: 32px;
+				padding: 0 12px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				background: var(--chip);
+				font-size: 15px;
+				color: var(--muted);
+			}
+			.chip b {
+				color: var(--fg);
+				font-weight: 500;
+			}
+			.chip code {
+				font-family: 'Fira Code', monospace;
+				font-size: 14px;
+				color: var(--fg);
+			}
+			.dot {
+				width: 7px;
+				height: 7px;
+				border-radius: 50%;
+				background: var(--success);
+			}
+			/* The real app, bleeding off the right and bottom edges. */
+			.shot {
+				position: absolute;
+				left: 640px;
+				top: 88px;
+				width: 760px;
+				border: 1px solid var(--border);
+				border-radius: 14px;
+				overflow: hidden;
+				box-shadow: var(--shadow);
+				background: var(--bg);
+			}
+			.shot img {
+				display: block;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="copy">
+			<div class="brand">
+				<svg viewBox="0 0 32 32" aria-hidden="true">
+					<rect width="32" height="32" rx="8" fill="var(--mark-bg)" />
+					<path
+						transform="translate(5 5) scale(0.9167)"
+						fill="var(--mark-fg)"
+						stroke="var(--mark-fg)"
+						stroke-width="1.5"
+						stroke-linejoin="round"
+						d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"
+					/>
+				</svg>
+				Omarchy Provision
+			</div>
+
+			<div>
+				<h1><span class="dim">Omarchy is fast.</span>Your setup is<br />even faster.</h1>
+				<p>Pick your theme, apps and tools once. Export a validated omarchy.yml and let it provision the rest.</p>
+			</div>
+
+			<div class="chips">
+				<span class="chip"><b>{{BUILTIN}}</b> built-in + <b>{{COMMUNITY}}</b> community themes</span>
+				<span class="chip"><span class="dot"></span>Synced with Omarchy <code>v{{VERSION}}</code></span>
+			</div>
+		</div>
+
+		<div class="shot"><img src="{{SHOT}}" alt="" /></div>
+	</body>
+</html>

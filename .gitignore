@@ -21,3 +21,6 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Temporary render files from scripts/brand/render-readme.sh
+scripts/brand/.readme-banner-*.html
