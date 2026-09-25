@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="text-scale" content="scale" />
+		<meta name="theme-color" content="#ffffff" />
+		<script>
+			// Apply the saved color mode before first paint so dark mode never flashes white.
+			(() => {
+				let mode = 'system';
+				try {
+					mode = localStorage.getItem('omarchy-provision:mode') || 'system';
+				} catch {}
+				const dark =
+					mode === 'dark' || (mode !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+				const root = document.documentElement;
+				root.classList.toggle('dark', dark);
+				root.style.colorScheme = dark ? 'dark' : 'light';
+				document.querySelector('meta[name="theme-color"]').content = dark ? '#0a0a0a' : '#ffffff';
+			})();
+		</script>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
