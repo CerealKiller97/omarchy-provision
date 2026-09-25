@@ -1,0 +1,60 @@
+name: Sync community themes
+
+on:
+  schedule:
+    # Twice a day; new community themes are added by hand via PRs to omarchy-site.
+    - cron: '43 5,17 * * *'
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: Deploy even if the theme list is unchanged
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-community-themes
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Extract themes from omarchy.org/themes
+        id: fetch
+        run: |
+          node scripts/sync-community-themes.mjs | tee "$RUNNER_TEMP/changes.md"
+          echo "count=$(node -p "require('./src/lib/community-themes.json').themes.length")" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Commit changes
+        id: commit
+        uses: ./.github/actions/commit-data
+        with:
+          path: src/lib/community-themes.json
+          title: "chore: sync community themes (${{ steps.fetch.outputs.count }})"
+          summary-file: ${{ runner.temp }}/changes.md
+
+  deploy:
+    needs: sync
+    if: needs.sync.outputs.changed == 'true' || inputs.force_deploy
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ github.ref_name }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

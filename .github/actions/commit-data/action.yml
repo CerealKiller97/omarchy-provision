@@ -1,0 +1,52 @@
+name: Commit synced data
+description: Commits a generated data file if it changed, pushes it, and reports whether it did.
+
+inputs:
+  path:
+    description: File to commit (repo-relative)
+    required: true
+  title:
+    description: Commit subject line
+    required: true
+  summary-file:
+    description: Markdown file with the change summary, used as commit body and job summary
+    required: true
+
+outputs:
+  changed:
+    description: "'true' when a commit was pushed"
+    value: ${{ steps.commit.outputs.changed }}
+
+runs:
+  using: composite
+  steps:
+    - id: commit
+      shell: bash
+      env:
+        DATA_PATH: ${{ inputs.path }}
+        TITLE: ${{ inputs.title }}
+        SUMMARY: ${{ inputs.summary-file }}
+      run: |
+        if git diff --quiet -- "$DATA_PATH" && [ -z "$(git ls-files --others -- "$DATA_PATH")" ]; then
+          echo "$DATA_PATH unchanged." | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        { echo "$TITLE"; echo; cat "$SUMMARY"; } > "$RUNNER_TEMP/commit-msg"
+        { echo "### $TITLE"; echo; cat "$SUMMARY"; } >> "$GITHUB_STEP_SUMMARY"
+
+        git config user.name "github-actions[bot]"
+        git config user.email "41898233+github-actions[bot]@users.noreply.github.com"
+        git add "$DATA_PATH"
+        git commit -F "$RUNNER_TEMP/commit-msg"
+
+        # The other sync workflow may have pushed meanwhile; it touches a different file,
+        # so a rebase always applies cleanly.
+        for attempt in 1 2 3; do
+          git pull --rebase && git push && break
+          [ "$attempt" = 3 ] && exit 1
+          sleep $((attempt * 5))
+        done
+
+        echo "changed=true" >> "$GITHUB_OUTPUT"
