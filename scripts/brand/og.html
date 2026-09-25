@@ -1,0 +1,170 @@
+<!doctype html>
+<!--
+  Source for static/og.png (1200×630 social preview). Regenerate with:
+    pnpm brand
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			@font-face {
+				font-family: 'Geist';
+				src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2') format('woff2');
+				font-weight: 100 900;
+			}
+			@font-face {
+				font-family: 'Fira Code';
+				src: url('../../node_modules/@fontsource-variable/fira-code/files/fira-code-latin-wght-normal.woff2') format('woff2');
+				font-weight: 300 700;
+			}
+			* {
+				box-sizing: border-box;
+				margin: 0;
+			}
+			html,
+			body {
+				width: 1200px;
+				height: 630px;
+				overflow: hidden;
+			}
+			body {
+				background: #0a0a0a;
+				color: #f3f4f6;
+				font-family: 'Geist', sans-serif;
+				-webkit-font-smoothing: antialiased;
+				display: grid;
+				grid-template-columns: 1fr 440px;
+				gap: 48px;
+				padding: 64px 72px;
+			}
+			.left {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 16px;
+				font-size: 24px;
+				font-weight: 600;
+				letter-spacing: -0.01em;
+			}
+			.brand svg {
+				width: 44px;
+				height: 44px;
+			}
+			h1 {
+				font-size: 64px;
+				line-height: 1.05;
+				font-weight: 650;
+				letter-spacing: -0.035em;
+			}
+			h1 .dim {
+				color: #6b7280;
+				display: block;
+			}
+			p {
+				margin-top: 24px;
+				font-size: 24px;
+				line-height: 1.4;
+				color: #9ca3af;
+				max-width: 560px;
+			}
+			.url {
+				font-family: 'Fira Code', monospace;
+				font-size: 20px;
+				color: #9ca3af;
+			}
+			.card {
+				align-self: center;
+				background: #111111;
+				border: 1px solid #262626;
+				border-radius: 16px;
+				overflow: hidden;
+				box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+			}
+			.card header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 16px 24px;
+				border-bottom: 1px solid #262626;
+				font-family: 'Fira Code', monospace;
+				font-size: 18px;
+				font-weight: 500;
+			}
+			.status {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-family: 'Geist', sans-serif;
+				font-size: 16px;
+				color: #f3f4f6;
+				border: 1px solid #262626;
+				border-radius: 999px;
+				padding: 4px 12px;
+			}
+			.status i {
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: #4ade80;
+			}
+			pre {
+				background: #000;
+				padding: 24px;
+				font-family: 'Fira Code', monospace;
+				font-variant-ligatures: none;
+				font-size: 19px;
+				line-height: 1.6;
+				color: #9ca3af;
+			}
+			.k {
+				color: #fff;
+				font-weight: 500;
+			}
+			.v {
+				color: #4ade80;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="left">
+			<div class="brand">
+				<svg viewBox="0 0 32 32" aria-hidden="true">
+					<rect width="32" height="32" rx="8" fill="#fff" />
+					<path
+						transform="translate(5 5) scale(0.9167)"
+						fill="#000"
+						stroke="#000"
+						stroke-width="1.5"
+						stroke-linejoin="round"
+						d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"
+					/>
+				</svg>
+				Omarchy Provision
+			</div>
+			<div>
+				<h1><span class="dim">Omarchy is fast.</span>Your setup is<br />even faster.</h1>
+				<p>Pick your theme, apps and tools once. Export omarchy.yml and let it provision the rest.</p>
+			</div>
+			<div class="url">stefanbogdanovic.dev</div>
+		</div>
+
+		<div class="card">
+			<header>omarchy.yml <span class="status"><i></i>Ready</span></header>
+			<pre><span class="k">theme</span>:
+  <span class="k">name</span>: <span class="v">tokyo-night</span>
+<span class="k">defaults</span>:
+  <span class="k">browser</span>: <span class="v">brave</span>
+  <span class="k">terminal</span>: <span class="v">ghostty</span>
+  <span class="k">editor</span>: <span class="v">nvim</span>
+<span class="k">install_dev_envs</span>:
+  - <span class="v">node</span>
+  - <span class="v">ruby</span>
+<span class="k">install_services</span>:
+  - <span class="v">tailscale</span></pre>
+		</div>
+	</body>
+</html>
