@@ -4,21 +4,38 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Called by sync-omarchy.yml after it commits new Omarchy data. Commits pushed
-  # with GITHUB_TOKEN don't fire `push`, so the sync workflow calls this directly.
+  # Called by the sync workflows after they commit new data. Commits pushed with
+  # GITHUB_TOKEN don't fire `push`, so they call this directly.
   workflow_call:
     inputs:
       ref:
-        description: Commit to build (defaults to the triggering commit)
+        description: Branch or commit to build (defaults to the triggering commit)
         type: string
         required: false
 
 permissions:
   contents: read
 
+# Setup (Settings → Secrets and variables → Actions):
+#   secrets  SSH_HOST          server hostname or IP
+#            SSH_USER          user that owns /var/www/omarchy-provision (e.g. stefan)
+#            SSH_PRIVATE_KEY   private key whose public half is in that user's authorized_keys
+#            SSH_KNOWN_HOSTS   output of `ssh-keyscan -p <port> <host>` (pins the host key)
+#            SSH_PORT          optional, defaults to 22
+#   variables SITE_URL         public URL, e.g. https://provision.example.com (canonical / Open Graph)
+#             BASE_PATH        optional sub-path the site is served under, e.g. /omarchy-provision
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: ${{ vars.SITE_URL }}
+    env:
+      TARGET_DIR: /var/www/omarchy-provision
     steps:
       - uses: actions/checkout@v5
         with:
@@ -37,31 +54,69 @@ jobs:
 
       - run: pnpm check
 
-      - id: pages
-        uses: actions/configure-pages@v5
-
       - run: pnpm build
         env:
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          BASE_PATH: ${{ vars.BASE_PATH }}
           # Absolute URL for canonical / Open Graph tags (og:image must be absolute).
-          VITE_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          VITE_SITE_URL: ${{ vars.SITE_URL }}
 
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: build
+      - name: Configure SSH
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          for name in SSH_HOST SSH_USER SSH_PRIVATE_KEY SSH_KNOWN_HOSTS; do
+            [ -n "${!name}" ] || { echo "::error::Missing secret $name (see the setup notes in deploy.yml)"; exit 1; }
+          done
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host deploy
+            HostName $SSH_HOST
+            User $SSH_USER
+            Port ${SSH_PORT:-22}
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+            BatchMode yes
+          EOF
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    concurrency:
-      group: pages
-      cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Upload build with scp
+        run: |
+          archive="omarchy-provision-${GITHUB_SHA::12}-${GITHUB_RUN_ATTEMPT}.tar.gz"
+          tar -czf "$archive" -C build .
+          scp "$archive" "deploy:/tmp/$archive"
+          echo "ARCHIVE=/tmp/$archive" >> "$GITHUB_ENV"
+
+      - name: Publish to ${{ env.TARGET_DIR }}
+        run: |
+          ssh deploy bash -s -- "$ARCHIVE" "$TARGET_DIR" <<'REMOTE'
+          set -euo pipefail
+          archive=$1 target=$2
+          release=$(mktemp -d)
+          trap 'rm -rf "$release" "$archive"' EXIT
+
+          tar -xzf "$archive" -C "$release"
+          [ -f "$release/index.html" ] || { echo "Archive has no index.html; aborting." >&2; exit 1; }
+
+          # Copy the new release over the live site first, then remove files that are no longer
+          # part of it (old hashed assets), so the site never goes empty mid-deploy.
+          mkdir -p "$target"
+          cp -a "$release/." "$target/"
+          (cd "$target" && find . -mindepth 1 \( -type f -o -type l \) -print0) |
+            while IFS= read -r -d '' file; do
+              [ -e "$release/$file" ] || [ -L "$release/$file" ] || rm -f "$target/$file"
+            done
+          find "$target" -mindepth 1 -type d -empty -delete
+
+          echo "Deployed $(find "$target" -type f | wc -l) files to $target"
+          REMOTE
+
+      - name: Clean up SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

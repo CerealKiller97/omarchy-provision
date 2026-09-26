@@ -24,7 +24,11 @@ shoot() { # shoot <out.png> <width> <height> <scale> <url> [extra flags...]
 
 tmp=$(mktemp -d)
 port=4179
-pnpm build >/dev/null
+# The banner shows the apply command, so build with the public URL rather than localhost:
+# SITE_URL from the environment, else the repository's SITE_URL Actions variable.
+site_url="${SITE_URL:-$(gh variable get SITE_URL 2>/dev/null || true)}"
+[[ -n $site_url ]] || { echo "Set SITE_URL (or the SITE_URL repository variable) to the public site URL." >&2; exit 1; }
+VITE_SITE_URL="$site_url" pnpm build >/dev/null
 pnpm exec vite preview --port $port --strictPort >/dev/null 2>&1 &
 server=$!
 trap 'kill $server 2>/dev/null || true; rm -rf "$tmp"' EXIT

@@ -56,7 +56,7 @@ export function defaultConfig(): Config {
 		devEnvs: [],
 		webapps: [],
 		tuis: [],
-		updatePacmanMirrors: true,
+		updatePacmanMirrors: false,
 		initialSystemUpdate: true
 	};
 }
@@ -257,10 +257,10 @@ export function toYaml(c: Config): string {
 
 	out.push(
 		[
-			'# reflector',
+			'# reflector: rank mirrors (replaces Omarchy\'s default mirrorlist, keeps a .bak)',
 			`update_pacman_mirrors: ${c.updatePacmanMirrors}`,
 			'',
-			'# omarchy update',
+			'# omarchy update -y (runs first)',
 			`initial_system_update: ${c.initialSystemUpdate}`,
 			''
 		].join('\n')

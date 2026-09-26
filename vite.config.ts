@@ -12,7 +12,7 @@ export default defineConfig({
 				runes: ({ filename }) => filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 			adapter: adapter(),
-			// Set by the deploy workflow when served from a sub-path (e.g. GitHub Pages /<repo>).
+			// Set by the deploy workflow (BASE_PATH variable) when served from a sub-path.
 			paths: { base: (process.env.BASE_PATH ?? '') as '' | `/${string}` }
 		})
 	]

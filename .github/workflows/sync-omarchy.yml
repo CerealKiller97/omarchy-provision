@@ -56,7 +56,7 @@ jobs:
       # Build the branch head, not a pinned commit, so whichever deploy runs last includes
       # every sync that has landed (the community-themes sync deploys the same way).
       ref: ${{ github.ref_name }}
+    # The deploy job needs the SSH secrets; called workflows only see them when passed on.
+    secrets: inherit
     permissions:
       contents: read
-      pages: write
-      id-token: write

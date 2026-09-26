@@ -15,6 +15,7 @@
 	import TagInput from '$lib/components/TagInput.svelte';
 	import ToggleRow from '$lib/components/ToggleRow.svelte';
 	import YamlCode from '$lib/components/YamlCode.svelte';
+	import Logo from '$lib/components/Logo.svelte';
 	import UrlInput from '$lib/components/UrlInput.svelte';
 	import IconField from '$lib/components/IconField.svelte';
 	import { WEBAPP_ICONS, TUI_ICONS, suggestForUrl, suggestForCommand } from '$lib/icon-catalog';
@@ -29,7 +30,6 @@
 	import GlobeIcon from '@lucide/svelte/icons/globe';
 	import TerminalIcon from '@lucide/svelte/icons/square-terminal';
 	import SettingsIcon from '@lucide/svelte/icons/settings-2';
-	import ZapIcon from '@lucide/svelte/icons/zap';
 	import FileCodeIcon from '@lucide/svelte/icons/file-code';
 	import CopyIcon from '@lucide/svelte/icons/copy';
 	import CheckIcon from '@lucide/svelte/icons/check';
@@ -55,6 +55,10 @@
 	let config = $state<Config>(defaultConfig());
 	let ready = $state(false);
 	let copied = $state(false);
+	let copiedCommand = $state(false);
+	// The apply script ships next to the page; resolved against the real URL once in the browser.
+	let applyUrl = $state(SITE.url ? `${SITE.url}/apply.sh` : asset('/apply.sh'));
+	const applyCommand = $derived(`bash <(curl -fsSL ${applyUrl})`);
 	let resetArmed = $state(false);
 	let active = $state('theme');
 
@@ -66,6 +70,8 @@
 			/* storage unavailable or corrupt: start from defaults */
 		}
 		ready = true;
+		// Without a configured site URL (local builds), use wherever the page is served from.
+		if (!SITE.url) applyUrl = new URL(asset('/apply.sh'), location.href).href;
 
 		// Highlight the section nav entry for whatever is in the upper part of the viewport.
 		const observer = new IntersectionObserver(
@@ -133,6 +139,16 @@
 			setTimeout(() => (copied = false), 1500);
 		} catch {
 			/* clipboard blocked: the user can still download */
+		}
+	}
+
+	async function copyCommand() {
+		try {
+			await navigator.clipboard.writeText(applyCommand);
+			copiedCommand = true;
+			setTimeout(() => (copiedCommand = false), 1500);
+		} catch {
+			/* clipboard blocked: the command is selectable */
 		}
 	}
 
@@ -217,9 +233,7 @@
 <header class="bg-background/80 sticky top-0 z-40 border-b backdrop-blur-md">
 	<div class="mx-auto flex h-14 max-w-screen-2xl items-center gap-4 px-4 sm:px-6">
 		<a href="#top" class="flex items-center gap-2 text-sm font-semibold">
-			<span class="bg-primary text-primary-foreground grid size-7 place-items-center rounded-md">
-				<ZapIcon class="size-4" fill="currentColor" />
-			</span>
+			<Logo />
 			{SITE.name}
 		</a>
 		<div class="ml-auto flex items-center gap-2">
@@ -548,7 +562,7 @@
 
 				<Section id="system" title="System" icon={SettingsIcon} description="Runs before anything else is installed.">
 					<div class="divide-y">
-						<ToggleRow id="mirrors" label="Refresh pacman mirrors" description="Picks the fastest mirrors with reflector." bind:checked={config.updatePacmanMirrors} />
+						<ToggleRow id="mirrors" label="Rank pacman mirrors" description="Uses reflector to pick the fastest mirrors, replacing Omarchy's default list (a backup is kept)." bind:checked={config.updatePacmanMirrors} />
 						<ToggleRow id="update" bind:checked={config.initialSystemUpdate}>
 							{#snippet label()}Run <code class="font-mono text-xs">omarchy update</code> first{/snippet}
 							{#snippet description()}Brings the system up to date before provisioning.{/snippet}
@@ -618,6 +632,39 @@
 						<RotateCcwIcon class="size-4" />
 						{#if resetArmed}Confirm{/if}
 					</Button>
+				</div>
+
+				<!-- One command applies the downloaded file on the Omarchy machine. -->
+				<div class="grid gap-2 border-t p-3">
+					<div class="flex items-center justify-between gap-2">
+						<p class="text-xs font-medium">Then run on your Omarchy machine</p>
+						<a
+							href={applyUrl}
+							target="_blank"
+							rel="noreferrer"
+							class="text-muted-foreground hover:text-foreground focus-visible:ring-ring inline-flex items-center gap-1 rounded-sm text-xs transition-colors duration-150 outline-none focus-visible:ring-2"
+						>
+							View script <ExternalLinkIcon class="size-3" />
+						</a>
+					</div>
+					<div class="bg-code text-code-foreground flex items-center overflow-hidden rounded-md">
+						<code class="min-w-0 flex-1 overflow-x-auto px-3 py-2 font-mono text-xs whitespace-nowrap select-all">
+							<span class="text-code-muted select-none">{'$ '}</span>{applyCommand}
+						</code>
+						<button
+							type="button"
+							onclick={copyCommand}
+							aria-label={copiedCommand ? 'Command copied' : 'Copy command'}
+							title="Copy command"
+							class="text-code-muted focus-visible:ring-ring grid size-8 shrink-0 place-items-center transition-colors duration-150 outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-inset"
+						>
+							{#if copiedCommand}<CheckIcon class="size-4" />{:else}<CopyIcon class="size-4" />{/if}
+						</button>
+					</div>
+					<p class="text-muted-foreground text-xs">
+						It finds <code class="text-foreground font-mono">omarchy.yml</code> in the current folder or
+						<code class="text-foreground font-mono">~/Downloads</code>.
+					</p>
 				</div>
 			</div>
 			<p class="text-muted-foreground px-1 text-xs">

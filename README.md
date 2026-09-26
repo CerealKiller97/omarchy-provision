@@ -11,6 +11,21 @@ validated input, so the exported file can only contain values the
 [`omarchy` CLI](https://omarchy.org/manual/omarchy-cli/) accepts. Everything runs in the
 browser; nothing is sent anywhere. State is kept in `localStorage`.
 
+## Apply it
+
+1. Build your config on the site and click **Download** (it lands in `~/Downloads/omarchy.yml`).
+2. On the Omarchy machine, run the command shown under the preview:
+
+   ```bash
+   bash <(curl -fsSL https://<your-site>/apply.sh)
+   ```
+
+`static/apply.sh` is served next to the page. It finds `omarchy.yml` in the current folder or
+`~/Downloads` (or takes a path argument), optionally ranks mirrors and runs `omarchy update -y`,
+then applies every section through the `omarchy` CLI. Each step is best-effort, so one failure does
+not stop the rest. Use `bash <(curl …)` rather than `curl … | bash`: installers that prompt would
+otherwise read the rest of the script as their input.
+
 ## Develop
 
 ```bash
@@ -43,8 +58,8 @@ pnpm build    # static site in ./build (adapter-static)
 
 ## Exported format
 
-Flat keys and single-level lists, read by `apply-config.sh` in
-[system-setup](../system-setup/systems/linux/omarchy). `webapps` entries are `name|url|icon`,
+Flat keys and single-level lists, read by `static/apply.sh` (a copy of
+`apply-config.sh` from [system-setup](../system-setup/systems/linux/omarchy)). `webapps` entries are `name|url|icon`,
 `tuis` entries are `name|command|float-or-tile|icon`. A web app's icon may be empty, which
 makes `omarchy webapp install` fetch the site's own icon.
 
@@ -58,9 +73,24 @@ makes `omarchy webapp install` fetch the site's own icon.
 - `.github/workflows/sync-community-themes.yml` runs twice a day (and on demand). It extracts every
   theme from `themes/index.html` in `omacom/omarchy-site`, commits `src/lib/community-themes.json` if
   the list changed, and deploys. Both sync workflows commit through `.github/actions/commit-data`.
-- `.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages on every push
-  to `main`, on demand, or when the sync workflow calls it.
-- One-time setup: **Settings → Pages → Source: GitHub Actions**.
+- `.github/workflows/deploy.yml` builds the site on every push to `main`, on demand, or when a
+  sync workflow calls it, uploads it with `scp` and publishes it into `/var/www/omarchy-provision` over
+  SSH. New files are copied in before stale ones are removed, so the site never goes empty mid-deploy.
+
+### Server deploy setup
+
+1. Create a deploy key and authorize it for the user that owns `/var/www/omarchy-provision`:
+
+   ```bash
+   ssh-keygen -t ed25519 -N '' -C omarchy-provision-deploy -f omarchy-provision-deploy
+   ssh-copy-id -i omarchy-provision-deploy.pub stefan@your-server
+   ```
+
+2. Add repository secrets (**Settings → Secrets and variables → Actions**): `SSH_HOST`, `SSH_USER`,
+   `SSH_PRIVATE_KEY` (contents of `omarchy-provision-deploy`), `SSH_KNOWN_HOSTS` (output of
+   `ssh-keyscan -p 22 your-server`, pins the host key) and optionally `SSH_PORT`.
+3. Add repository variables: `SITE_URL` (public URL, used for canonical / Open Graph tags and the
+   apply command) and, if the site is served under a sub-path, `BASE_PATH`.
 
 ## Brand assets
 

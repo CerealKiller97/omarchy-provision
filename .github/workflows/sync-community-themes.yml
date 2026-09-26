@@ -54,7 +54,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       ref: ${{ github.ref_name }}
+    # The deploy job needs the SSH secrets; called workflows only see them when passed on.
+    secrets: inherit
     permissions:
       contents: read
-      pages: write
-      id-token: write

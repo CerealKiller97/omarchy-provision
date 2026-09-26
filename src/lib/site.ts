@@ -5,7 +5,7 @@ export const SITE = {
 	tagline: 'Omarchy is fast. Your setup is even faster.',
 	description:
 		'Omarchy already installs in minutes. Pick your theme, apps and tools once, export omarchy.yml, and let it provision the rest.',
-	/** Absolute site URL (e.g. https://user.github.io/repo), set by the deploy workflow. */
+	/** Absolute site URL (the SITE_URL Actions variable), set by the deploy workflow. */
 	url: ((import.meta.env.VITE_SITE_URL as string | undefined) ?? '').replace(/\/$/, ''),
 	author: { name: 'Stefan Bogdanović', url: 'https://stefanbogdanovic.dev' }
 };
