@@ -499,5 +499,229 @@
 			"magenta": "#2e2e2e",
 			"preview": "themes/builtin/white-597b3c41.webp"
 		}
+	},
+	"browsers": [
+		{
+			"id": "chromium",
+			"label": "Chromium",
+			"preinstalled": true
+		},
+		{
+			"id": "chrome",
+			"label": "Chrome",
+			"install": "install browser chrome",
+			"preinstalled": false
+		},
+		{
+			"id": "brave",
+			"label": "Brave",
+			"install": "install browser brave",
+			"preinstalled": false
+		},
+		{
+			"id": "brave-origin",
+			"label": "Brave Origin",
+			"install": "install browser brave-origin",
+			"preinstalled": false
+		},
+		{
+			"id": "edge",
+			"label": "Edge",
+			"install": "install browser edge",
+			"preinstalled": false
+		},
+		{
+			"id": "firefox",
+			"label": "Firefox",
+			"install": "install browser firefox",
+			"preinstalled": false
+		},
+		{
+			"id": "zen",
+			"label": "Zen",
+			"install": "install browser zen",
+			"preinstalled": false
+		}
+	],
+	"editors": [
+		{
+			"id": "vscode",
+			"label": "VSCode",
+			"install": "install editor vscode",
+			"summary": "Install VS Code and configure Omarchy defaults for secrets, updates, and theme"
+		},
+		{
+			"id": "cursor",
+			"label": "Cursor",
+			"install": "pkg add cursor-bin"
+		},
+		{
+			"id": "zed",
+			"label": "Zed",
+			"install": "install editor zed",
+			"summary": "Install Zed Editor and configure it with the current Omarchy theme"
+		},
+		{
+			"id": "sublime",
+			"label": "Sublime Text",
+			"install": "pkg add sublime-text-4"
+		},
+		{
+			"id": "helix",
+			"label": "Helix",
+			"install": "install editor helix",
+			"summary": "Install Helix and configure it to use the current Omarchy theme"
+		},
+		{
+			"id": "vim",
+			"label": "Vim",
+			"install": "pkg add vim"
+		},
+		{
+			"id": "emacs",
+			"label": "Emacs",
+			"install": "install editor emacs",
+			"summary": "Install Emacs with Omarchy theme and font integration via the omarchy-emacs AUR package"
+		}
+	],
+	"terminals": [
+		{
+			"id": "alacritty",
+			"label": "Alacritty",
+			"install": "install terminal alacritty",
+			"preinstalled": false
+		},
+		{
+			"id": "foot",
+			"label": "Foot",
+			"install": "install terminal foot",
+			"preinstalled": true
+		},
+		{
+			"id": "ghostty",
+			"label": "Ghostty",
+			"install": "install terminal ghostty",
+			"preinstalled": false
+		},
+		{
+			"id": "kitty",
+			"label": "Kitty",
+			"install": "install terminal kitty",
+			"preinstalled": false
+		}
+	],
+	"ai": [
+		{
+			"id": "chatgpt",
+			"label": "ChatGPT Desktop",
+			"install": "install ai chatgpt",
+			"summary": "Install the ChatGPT desktop app"
+		},
+		{
+			"id": "dictation",
+			"label": "Dictation",
+			"install": "voxtype install",
+			"summary": "Install and configure Voxtype dictation"
+		},
+		{
+			"id": "grok-bot",
+			"label": "Grok Bot",
+			"install": "pkg add grok-bot"
+		},
+		{
+			"id": "lm-studio",
+			"label": "LM Studio",
+			"install": "pkg add lmstudio-bin"
+		},
+		{
+			"id": "t3-code",
+			"label": "T3 Code",
+			"install": "install ai t3 code",
+			"summary": "Install T3 Code and point it at the Omarchy palette"
+		},
+		{
+			"id": "hermes",
+			"label": "Hermes Desktop",
+			"install": "install ai hermes",
+			"summary": "Install the Hermes desktop app"
+		},
+		{
+			"id": "openclaw",
+			"label": "OpenClaw",
+			"install": "install ai openclaw",
+			"summary": "Install the OpenClaw agent platform and its Control UI web app"
+		},
+		{
+			"id": "perplexity",
+			"label": "Perplexity",
+			"install": "pkg add perplexity"
+		}
+	],
+	"gaming": [
+		{
+			"id": "steam",
+			"label": "Steam",
+			"install": "install gaming steam",
+			"summary": "Install Steam and graphics drivers selected for this system"
+		},
+		{
+			"id": "retroarch",
+			"label": "RetroArch",
+			"install": "install gaming retroarch",
+			"summary": "Install RetroArch with the full libretro core set plus FBNeo and a ~/Games ROM directory"
+		},
+		{
+			"id": "minecraft",
+			"label": "Minecraft",
+			"install": "pkg add minecraft-launcher"
+		},
+		{
+			"id": "geforce-now",
+			"label": "NVIDIA GeForce NOW",
+			"install": "install gaming geforce now",
+			"summary": "Install and launch Geforce Now"
+		},
+		{
+			"id": "xbox-cloud",
+			"label": "Xbox Cloud Gaming",
+			"install": "install gaming xbox cloud",
+			"summary": "Install Xbox Cloud Gaming as a web app and launch it"
+		},
+		{
+			"id": "xbox-controllers",
+			"label": "Xbox Controllers",
+			"install": "install gaming xbox controllers",
+			"summary": "Install support for using Xbox controllers with Steam/RetroArch/etc"
+		},
+		{
+			"id": "battlenet",
+			"label": "Battle.net",
+			"install": "install gaming battlenet",
+			"summary": "Install Battle.net standalone via umu-launcher + GE-Proton (no Steam, no Lutris, no Heroic)"
+		},
+		{
+			"id": "lutris",
+			"label": "Lutris",
+			"install": "install gaming lutris",
+			"summary": "Install Lutris with Wine + DXVK for running Windows games (Battle.net, EA, Ubisoft Connect, etc.)"
+		},
+		{
+			"id": "heroic",
+			"label": "Heroic (Epic Games)",
+			"install": "install gaming heroic",
+			"summary": "Install Heroic Games Launcher (Epic, GOG, Amazon Prime Gaming) with graphics drivers"
+		}
+	],
+	"tryOmarchy": {
+		"repo": "omacom/try-omarchy",
+		"release": "4.0.3",
+		"themes": [
+			"catppuccin",
+			"gruvbox",
+			"matte-black",
+			"rose-pine",
+			"tokyo-night",
+			"white"
+		]
 	}
 }

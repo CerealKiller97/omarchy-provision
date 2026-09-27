@@ -67,10 +67,17 @@ makes `omarchy webapp install` fetch the site's own icon.
 ## Omarchy sync & deploy
 
 - `.github/workflows/sync-omarchy.yml` runs every 6 hours (and on demand). It fetches
-  `install/omarchy-{base,other}.packages`, every `themes/*/colors.toml` and every
-  `themes/*/preview.png` from the latest `basecamp/omarchy` release tag. Version, packages and
+  `install/omarchy-{base,other}.packages`, every `themes/*/colors.toml`, every
+  `themes/*/preview.png`, the Install › Browser / Editor / Terminal / AI / Gaming menu entries
+  (`default/omarchy/omarchy-menu.jsonc`, each translated to the `omarchy` command that installs it;
+  entries whose action can't be translated, like Ollama's GPU check, are skipped with a warning; each
+  entry's own script contributes its `omarchy:summary` as the description shown on the site)
+  and the values `omarchy default browser` accepts, from the latest `basecamp/omarchy`
+  release tag. Version, packages and
   built-in themes therefore always describe the same release (a branch's `version` file is a dev
-  marker and is ignored; set `OMARCHY_REF` to preview a branch locally). If anything changed, it
+  marker and is ignored; set `OMARCHY_REF` to preview a branch locally). It also reads
+  `guest/spec.json` from `omacom/try-omarchy`, whose macOS VM image ships only the built-in themes
+  listed there; picking **Try Omarchy (macOS)** on the Built-in tab limits the list to those. If anything changed, it
   commits `src/lib/omarchy.json` and `static/themes/builtin/`, then deploys. Run it manually with
   **force_deploy** to redeploy without an upstream change.
 - `.github/workflows/sync-community-themes.yml` runs twice a day (and on demand). It reads

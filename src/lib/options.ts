@@ -14,6 +14,7 @@ import {
 	si1password,
 	siAlacritty,
 	siBasecamp,
+	siBattledotnet,
 	siBitwarden,
 	siBrave,
 	siBun,
@@ -37,26 +38,34 @@ import {
 	siGooglemessages,
 	siGooglephotos,
 	siHelix,
+	siHeroicgameslauncher,
 	siHey,
 	siKdenlive,
 	siLaravel,
 	siLibreoffice,
+	siLmstudio,
+	siLutris,
 	siNeovim,
 	siNodedotjs,
 	siNordvpn,
+	siNvidia,
 	siObsidian,
 	siObsstudio,
 	siOcaml,
+	siOllama,
 	siOpencode,
 	siOpenjdk,
+	siPerplexity,
 	siPhoenixframework,
 	siPhp,
 	siPython,
+	siRetroarch,
 	siRuby,
 	siRust,
 	siScala,
 	siSignal,
 	siSpotify,
+	siSteam,
 	siSublimetext,
 	siSymfony,
 	siTailscale,
@@ -73,22 +82,35 @@ import {
 /** `icon` is a Simple Icons brand glyph; options without one render a letter badge. */
 export type Option = { value: string; label: string; hint?: string; icon?: SimpleIcon };
 
-export const BROWSERS: Option[] = [
-	{ value: 'chromium', label: 'Chromium' },
-	{ value: 'chrome', label: 'Google Chrome', icon: siGooglechrome },
-	{ value: 'brave', label: 'Brave', icon: siBrave },
-	{ value: 'brave-origin', label: 'Brave Origin', icon: siBrave },
-	{ value: 'edge', label: 'Microsoft Edge' },
-	{ value: 'firefox', label: 'Firefox', icon: siFirefoxbrowser },
-	{ value: 'zen', label: 'Zen', icon: siZenbrowser }
-];
+const BROWSER_BRANDS: Record<string, SimpleIcon> = {
+	chrome: siGooglechrome,
+	brave: siBrave,
+	'brave-origin': siBrave,
+	firefox: siFirefoxbrowser,
+	zen: siZenbrowser
+};
 
-export const TERMINALS: Option[] = [
-	{ value: 'alacritty', label: 'Alacritty', icon: siAlacritty },
-	{ value: 'foot', label: 'Foot' },
-	{ value: 'ghostty', label: 'Ghostty', icon: siGhostty },
-	{ value: 'kitty', label: 'Kitty' }
-];
+/**
+ * Values `omarchy default browser` takes, synced by scripts/sync-omarchy.mjs: the Install > Browser
+ * menu (installed with `omarchy install browser <value>`) plus preinstalled ones.
+ */
+export const BROWSERS: Option[] = omarchy.browsers.map((b) => ({
+	value: b.id,
+	label: b.label,
+	hint: b.preinstalled ? 'Preinstalled' : undefined,
+	icon: BROWSER_BRANDS[b.id]
+}));
+
+const TERMINAL_BRANDS: Record<string, SimpleIcon> = { alacritty: siAlacritty, ghostty: siGhostty };
+
+/** Omarchy's Install > Terminal menu, synced by scripts/sync-omarchy.mjs; `omarchy install terminal <value>`. */
+export const TERMINALS: Option[] = omarchy.terminals.map((t) => ({
+	value: t.id,
+	label: t.label,
+	// The menu hides installed terminals, so say which ones Omarchy already ships.
+	hint: omarchy.packages.base.includes(t.id) ? 'Preinstalled' : undefined,
+	icon: TERMINAL_BRANDS[t.id]
+}));
 
 export const EDITORS: Option[] = [
 	{ value: 'nvim', label: 'Neovim', icon: siNeovim },
@@ -100,6 +122,73 @@ export const EDITORS: Option[] = [
 	{ value: 'zed', label: 'Zed', icon: siZedindustries },
 	{ value: 'sublime_text', label: 'Sublime Text', icon: siSublimetext }
 ];
+
+const EDITOR_BRANDS: Record<string, SimpleIcon> = {
+	cursor: siCursor,
+	zed: siZedindustries,
+	sublime: siSublimetext,
+	helix: siHelix,
+	vim: siVim,
+	emacs: siGnuemacs
+};
+
+const AI_BRANDS: Record<string, SimpleIcon> = {
+	'grok-bot': siX,
+	'lm-studio': siLmstudio,
+	ollama: siOllama,
+	perplexity: siPerplexity
+};
+
+const GAMING_BRANDS: Record<string, SimpleIcon> = {
+	steam: siSteam,
+	retroarch: siRetroarch,
+	'geforce-now': siNvidia,
+	battlenet: siBattledotnet,
+	lutris: siLutris,
+	heroic: siHeroicgameslauncher
+};
+
+/** `summary` is the upstream script's own description, when the entry has a script of its own. */
+type MenuInstall = { id: string; label: string; install: string; summary?: string };
+
+// Preinstalled browsers and terminals are only choices for the default, not things to install.
+const installableOnly = (list: { id: string; label: string; install?: string; preinstalled: boolean }[]) =>
+	list.filter((e): e is MenuInstall & { preinstalled: boolean } => !e.preinstalled && !!e.install);
+
+/**
+ * Install menus synced by scripts/sync-omarchy.mjs, keyed by their `Config` field: YAML key, menu
+ * name, entries and brand icons. Object order is the YAML order.
+ */
+export const MENU_INSTALLS = {
+	browsers: { yaml: 'install_browsers', menu: 'Browser', entries: installableOnly(omarchy.browsers), brands: BROWSER_BRANDS },
+	terminals: { yaml: 'install_terminals', menu: 'Terminal', entries: installableOnly(omarchy.terminals), brands: TERMINAL_BRANDS },
+	editors: { yaml: 'install_editors', menu: 'Editor', entries: omarchy.editors as MenuInstall[], brands: EDITOR_BRANDS },
+	ai: { yaml: 'install_ai', menu: 'AI', entries: omarchy.ai as MenuInstall[], brands: AI_BRANDS },
+	gaming: { yaml: 'install_gaming', menu: 'Gaming', entries: omarchy.gaming as MenuInstall[], brands: GAMING_BRANDS }
+};
+export type MenuInstallGroup = keyof typeof MENU_INSTALLS;
+
+/** A menu's entries as checkbox options, in the menu's order. */
+export const menuOptions = (group: MenuInstallGroup): Option[] =>
+	MENU_INSTALLS[group].entries.map((e) => ({
+		value: e.id,
+		label: e.label,
+		hint: e.summary,
+		icon: (MENU_INSTALLS[group].brands as Record<string, SimpleIcon>)[e.id]
+	}));
+
+export const EDITOR_INSTALLS = menuOptions('editors');
+
+/** Default-editor values (see EDITORS) that need installing first, mapped to their menu id. */
+export const DEFAULT_EDITOR_INSTALL: Record<string, string> = {
+	code: 'vscode',
+	cursor: 'cursor',
+	zed: 'zed',
+	sublime_text: 'sublime',
+	helix: 'helix',
+	vim: 'vim',
+	emacs: 'emacs'
+};
 
 export const AGENTS: Option[] = [
 	{ value: 'claude', label: 'Claude Code', icon: siClaude },
@@ -152,6 +241,20 @@ export const COMMUNITY_THEMES: CommunityTheme[] = community.themes;
 /** URL of a synced theme preview (`preview` / `image` above), honouring the base path. */
 export const themeImage = (path: string | null | undefined) =>
 	path ? asset(`/${path}` as Asset) : null;
+
+export type Target = 'omarchy' | 'try-omarchy';
+
+/** Where the config will be applied: a normal install, or the Try Omarchy macOS VM. */
+export const TARGETS: { value: Target; label: string }[] = [
+	{ value: 'omarchy', label: 'Omarchy' },
+	{ value: 'try-omarchy', label: 'Try Omarchy (macOS)' }
+];
+
+/** The subset of built-in themes the Try Omarchy VM image ships, synced from its guest/spec.json. */
+export const TRY_OMARCHY_THEMES: string[] = omarchy.tryOmarchy?.themes ?? [];
+
+/** Try Omarchy's Omarchy release (it pins its own commit, so it can trail the latest release). */
+export const TRY_OMARCHY_RELEASE: string = omarchy.tryOmarchy?.release ?? '';
 
 /** Themes shipped with Omarchy (`omarchy theme set <name>`), synced from upstream. */
 export const BUILTIN_THEMES: Option[] = Object.keys(THEME_PALETTES).map((value) => ({

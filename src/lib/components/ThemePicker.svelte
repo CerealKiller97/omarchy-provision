@@ -3,7 +3,10 @@
 	import { cn } from '$lib/utils';
 	import { BUILTIN_THEMES, THEME_PALETTES, themeImage } from '$lib/options';
 
-	let { value = $bindable() }: { value: string } = $props();
+	/** `only` limits the list to these theme names (e.g. what Try Omarchy ships). */
+	let { value = $bindable(), only }: { value: string; only?: string[] } = $props();
+
+	const themes = $derived(only ? BUILTIN_THEMES.filter((t) => only.includes(t.value)) : BUILTIN_THEMES);
 
 	const SWATCHES = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta', 'accent'] as const;
 
@@ -11,7 +14,7 @@
 </script>
 
 <div role="radiogroup" aria-label="Built-in theme" class="grid grid-cols-2 gap-3 sm:grid-cols-3 2xl:grid-cols-4">
-	{#each BUILTIN_THEMES as t (t.value)}
+	{#each themes as t (t.value)}
 		{@const p = THEME_PALETTES[t.value]}
 		{@const on = value === t.value}
 		{@const src = themeImage(p.preview)}

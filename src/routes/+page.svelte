@@ -31,6 +31,11 @@
 	import TerminalIcon from '@lucide/svelte/icons/square-terminal';
 	import SettingsIcon from '@lucide/svelte/icons/settings-2';
 	import FileCodeIcon from '@lucide/svelte/icons/file-code';
+	import SquarePenIcon from '@lucide/svelte/icons/square-pen';
+	import CompassIcon from '@lucide/svelte/icons/compass';
+	import TerminalWindowIcon from '@lucide/svelte/icons/terminal';
+	import SparklesIcon from '@lucide/svelte/icons/sparkles';
+	import Gamepad2Icon from '@lucide/svelte/icons/gamepad-2';
 	import CopyIcon from '@lucide/svelte/icons/copy';
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import DownloadIcon from '@lucide/svelte/icons/download';
@@ -40,7 +45,7 @@
 	import CircleAlertIcon from '@lucide/svelte/icons/circle-alert';
 	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
 	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
-	import { checkConfig, defaultConfig, themeNameFromUrl, toYaml, validate, type Config } from '$lib/config';
+	import { checkConfig, defaultConfig, installedEditors, menuSelection, themeNameFromUrl, toYaml, validate, type Config } from '$lib/config';
 	import * as O from '$lib/options';
 	import { cn } from '$lib/utils';
 	import omarchy from '$lib/omarchy.json';
@@ -103,6 +108,16 @@
 	const yaml = $derived(toYaml(config));
 	const lineCount = $derived(yaml.replace(/\n$/, '').split('\n').length);
 
+	function setTarget(target: O.Target) {
+		config.target = target;
+		// Keep the pick valid: the Try Omarchy VM ships only a few built-in themes.
+		if (target === 'try-omarchy' && !O.TRY_OMARCHY_THEMES.includes(config.theme.builtin))
+			config.theme.builtin = O.TRY_OMARCHY_THEMES.includes('tokyo-night') ? 'tokyo-night' : O.TRY_OMARCHY_THEMES[0];
+	}
+
+	const defaultEditorInstall = $derived(O.DEFAULT_EDITOR_INSTALL[config.defaults.editor]);
+	const optionLabel = (options: O.Option[], value: string) => options.find((o) => o.value === value)?.label ?? value;
+
 	const removalCount = $derived(
 		config.preinstalls === 'all'
 			? O.PREINSTALL_APPS.length + O.PREINSTALL_WEBAPPS.length + O.PREINSTALL_TUIS.length
@@ -122,6 +137,11 @@
 			count: () => config.pacmanPackages.length + config.aurPackages.length
 		},
 		{ id: 'services', label: 'Services', icon: PlugIcon, count: () => config.services.length },
+		{ id: 'browsers', label: 'Browsers', icon: CompassIcon, count: () => menuSelection(config, 'browsers').length },
+		{ id: 'terminals', label: 'Terminals', icon: TerminalWindowIcon, count: () => menuSelection(config, 'terminals').length },
+		{ id: 'editors', label: 'Editors', icon: SquarePenIcon, count: () => installedEditors(config).length },
+		{ id: 'ai', label: 'AI', icon: SparklesIcon, count: () => menuSelection(config, 'ai').length },
+		{ id: 'gaming', label: 'Gaming', icon: Gamepad2Icon, count: () => menuSelection(config, 'gaming').length },
 		{ id: 'dev-envs', label: 'Dev environments', icon: CodeIcon, count: () => config.devEnvs.length },
 		{ id: 'plugins', label: 'Plugins', icon: PuzzleIcon, count: () => config.plugins.length },
 		{ id: 'webapps', label: 'Web apps', icon: GlobeIcon, count: () => config.webapps.length },
@@ -315,8 +335,43 @@
 							<Tabs.Trigger value="community">Community</Tabs.Trigger>
 							<Tabs.Trigger value="custom">Repository</Tabs.Trigger>
 						</Tabs.List>
-						<Tabs.Content value="builtin">
-							<ThemePicker bind:value={config.theme.builtin} />
+						<Tabs.Content value="builtin" class="grid gap-4">
+							<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+								<span id="target-label" class="text-muted-foreground text-sm">Installing on</span>
+								<div role="radiogroup" aria-labelledby="target-label" class="bg-muted inline-flex rounded-lg p-[3px]">
+									{#each O.TARGETS as o (o.value)}
+										<label
+											class={cn(
+												'cursor-pointer rounded-md px-3 py-1 text-sm font-medium transition-colors duration-150',
+												'has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-2',
+												config.target === o.value
+													? 'bg-background text-foreground shadow-sm dark:bg-input/30'
+													: 'text-muted-foreground hover:text-foreground'
+											)}
+										>
+											<input
+												type="radio"
+												class="sr-only"
+												name="target"
+												value={o.value}
+												checked={config.target === o.value}
+												onchange={() => setTarget(o.value)}
+											/>
+											{o.label}
+										</label>
+									{/each}
+								</div>
+								{#if config.target === 'try-omarchy'}
+									<span class="text-muted-foreground text-xs">
+										Its VM image{O.TRY_OMARCHY_RELEASE ? ` (Omarchy ${O.TRY_OMARCHY_RELEASE})` : ''} ships
+										{O.TRY_OMARCHY_THEMES.length} of the {O.BUILTIN_THEMES.length} built-in themes.
+									</span>
+								{/if}
+							</div>
+							<ThemePicker
+								bind:value={config.theme.builtin}
+								only={config.target === 'try-omarchy' ? O.TRY_OMARCHY_THEMES : undefined}
+							/>
 						</Tabs.Content>
 						<Tabs.Content value="community" class="grid gap-6">
 							<CommunityThemePicker bind:value={config.theme.url} />
@@ -423,6 +478,75 @@
 						Installed with <code class="text-foreground font-mono text-xs">omarchy install service</code>.
 					{/snippet}
 					<CheckGroup name="svc" options={O.SERVICES} bind:selected={config.services} />
+				</Section>
+
+				<Section id="browsers" title="Browsers" icon={CompassIcon}>
+					{#snippet description()}
+						Omarchy's <span class="text-foreground">Install › Browser</span> menu, installed with
+						<code class="text-foreground font-mono text-xs">omarchy install browser</code>.
+					{/snippet}
+					<div class="grid gap-3">
+						<CheckGroup name="browser" options={O.menuOptions('browsers')} bind:selected={config.browsers} />
+						<p class="text-muted-foreground text-xs">
+							Your default browser, <span class="text-foreground">{optionLabel(O.BROWSERS, config.defaults.browser)}</span>,
+							{O.MENU_INSTALLS.browsers.entries.some((e) => e.id === config.defaults.browser)
+								? 'is installed with the defaults either way.'
+								: 'ships with Omarchy.'}
+						</p>
+					</div>
+				</Section>
+
+				<Section id="terminals" title="Terminals" icon={TerminalWindowIcon}>
+					{#snippet description()}
+						Omarchy's <span class="text-foreground">Install › Terminal</span> menu, installed with
+						<code class="text-foreground font-mono text-xs">omarchy install terminal</code>.
+					{/snippet}
+					<div class="grid gap-3">
+						<CheckGroup name="terminal" options={O.menuOptions('terminals')} bind:selected={config.terminals} />
+						<p class="text-muted-foreground text-xs">
+							Your default terminal, <span class="text-foreground">{optionLabel(O.TERMINALS, config.defaults.terminal)}</span>,
+							{O.MENU_INSTALLS.terminals.entries.some((e) => e.id === config.defaults.terminal)
+								? 'is installed with the defaults either way, and set last so it stays the default.'
+								: 'ships with Omarchy and is set last, so it stays the default.'}
+						</p>
+					</div>
+				</Section>
+
+				<Section id="editors" title="Editors" icon={SquarePenIcon}>
+					{#snippet description()}
+						Omarchy's <span class="text-foreground">Install › Editor</span> menu, installed without its
+						floating terminal.
+					{/snippet}
+					<div class="grid gap-3">
+						<CheckGroup name="editor" options={O.EDITOR_INSTALLS} bind:selected={config.editors} columns="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" />
+						{#if defaultEditorInstall && !config.editors.includes(defaultEditorInstall)}
+							<p class="text-muted-foreground text-xs">
+								Your default editor,
+								<span class="text-foreground">{O.EDITOR_INSTALLS.find((o) => o.value === defaultEditorInstall)?.label}</span>,
+								is installed too.
+							</p>
+						{/if}
+					</div>
+				</Section>
+
+				<Section id="ai" title="AI" icon={SparklesIcon}>
+					{#snippet description()}
+						Omarchy's <span class="text-foreground">Install › AI</span> menu.
+						{#if !O.MENU_INSTALLS.ai.entries.some((e) => e.id === 'ollama')}
+							Ollama isn't offered: its menu entry picks a CUDA, ROCm or CPU build on the spot, so add
+							<code class="text-foreground font-mono text-xs">ollama-cuda</code>,
+							<code class="text-foreground font-mono text-xs">ollama-rocm</code> or
+							<code class="text-foreground font-mono text-xs">ollama</code> under Extra packages instead.
+						{/if}
+					{/snippet}
+					<CheckGroup name="ai" options={O.menuOptions('ai')} bind:selected={config.ai} />
+				</Section>
+
+				<Section id="gaming" title="Gaming" icon={Gamepad2Icon}>
+					{#snippet description()}
+						Omarchy's <span class="text-foreground">Install › Gaming</span> menu.
+					{/snippet}
+					<CheckGroup name="gaming" options={O.menuOptions('gaming')} bind:selected={config.gaming} />
 				</Section>
 
 				<Section id="dev-envs" title="Development environments" icon={CodeIcon}>

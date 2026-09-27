@@ -33,6 +33,7 @@
 				<Select.Item value={o.value} label={o.label}>
 					<AppIcon icon={o.icon} label={o.label} />
 					{o.label}
+					{#if o.hint}<span class="text-muted-foreground ml-auto pl-3 text-xs">{o.hint}</span>{/if}
 				</Select.Item>
 			{/each}
 		</Select.Content>

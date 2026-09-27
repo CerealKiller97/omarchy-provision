@@ -11,8 +11,8 @@
 #   bash <(curl -fsSL https://<site>/apply.sh) path/to/omarchy.yml
 #
 # Optionally ranks mirrors and updates the system first, then applies the theme, plugins,
-# preinstall/app/web-app removal, pacman/AUR packages, services, dev environments, web app and
-# TUI launchers, and defaults. Each item is best-effort, so one
+# preinstall/app/web-app removal, pacman/AUR packages, services, browsers, terminals, editors, AI and gaming apps,
+# dev environments, web app and TUI launchers, and defaults. Each item is best-effort, so one
 # failure does not abort the rest. Must run on a real Omarchy install (needs the `omarchy` CLI).
 #
 # Run it with `bash <(curl …)` rather than `curl … | bash`: the installers it calls may prompt,
@@ -233,8 +233,11 @@ apply_defaults() {
         # default by `omarchy install terminal` itself.
         case "$key" in
             browser)
-                log_info "omarchy install browser $value"
-                omarchy install browser "$value" || log_error "Failed to install browser '$value'."
+                # Chromium ships with Omarchy; `omarchy install browser` only takes the others.
+                if [[ "$value" != chromium ]]; then
+                    log_info "omarchy install browser $value"
+                    omarchy install browser "$value" || log_error "Failed to install browser '$value'."
+                fi
                 ;;
             terminal)
                 log_info "omarchy install terminal $value"
@@ -382,6 +385,27 @@ apply_install_services() {
 }
 
 #######################################
+# Installs each entry listed under an install_* key synced from Omarchy's Install menus
+# (install_browsers, install_terminals, install_editors, install_ai, install_gaming). Entries are `id|args`, where args are the
+# `omarchy` arguments the menu entry runs (e.g. `pkg add cursor-bin`, `install gaming steam`).
+# Arguments:
+#   $1 - YAML key
+#   $2 - label for log output (e.g. "editors")
+#######################################
+apply_menu_installs() {
+    local key="$1" label="$2" entry name args
+    log_step "Installing $label"
+    while IFS= read -r entry; do
+        [[ -n "$entry" ]] || continue
+        name="${entry%%|*}"
+        read -ra args <<< "${entry#*|}"
+        log_info "omarchy ${args[*]}"
+        omarchy "${args[@]}" || log_error "Failed to install '$name'; skipping."
+    done < <(yaml_list "$key")
+    log_success "Installed $label."
+}
+
+#######################################
 # Installs each development environment listed under install_dev_envs.
 #######################################
 apply_install_dev_envs() {
@@ -451,6 +475,13 @@ main() {
     apply_pacman_packages
     apply_aur_packages
     apply_install_services
+    # Each `omarchy install terminal` makes that terminal the default; apply_defaults runs last
+    # and installs the chosen default terminal again, so it ends up as the default.
+    apply_menu_installs install_browsers browsers
+    apply_menu_installs install_terminals terminals
+    apply_menu_installs install_editors editors
+    apply_menu_installs install_ai "AI apps"
+    apply_menu_installs install_gaming "gaming apps"
     apply_install_dev_envs
     apply_webapps
     apply_tuis

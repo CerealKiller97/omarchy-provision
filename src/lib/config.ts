@@ -2,14 +2,20 @@ import {
 	AGENTS,
 	BROWSERS,
 	BUILTIN_THEMES,
+	DEFAULT_EDITOR_INSTALL,
 	DEV_ENVS,
+	EDITOR_INSTALLS,
+	MENU_INSTALLS,
 	EDITORS,
 	PREINSTALL_APPS,
 	PREINSTALL_TUIS,
 	PREINSTALL_WEBAPPS,
 	SERVICES,
 	TERMINALS,
-	type PreinstallMode
+	TRY_OMARCHY_THEMES,
+	type MenuInstallGroup,
+	type PreinstallMode,
+	type Target
 } from './options';
 import omarchy from './omarchy.json';
 
@@ -17,6 +23,8 @@ export type Webapp = { name: string; url: string; icon: string };
 export type Tui = { name: string; command: string; style: 'float' | 'tile'; icon: string };
 
 export type Config = {
+	/** Only narrows the choices (Try Omarchy ships fewer themes); it is not exported. */
+	target: Target;
 	theme: {
 		/** community = picked from omarchy.org/themes, custom = any Git repo; both install by URL. */
 		source: 'builtin' | 'community' | 'custom';
@@ -33,6 +41,12 @@ export type Config = {
 	pacmanPackages: string[];
 	aurPackages: string[];
 	services: string[];
+	/** Ids from the synced Install menus (MENU_INSTALLS). */
+	browsers: string[];
+	terminals: string[];
+	editors: string[];
+	ai: string[];
+	gaming: string[];
 	devEnvs: string[];
 	webapps: Webapp[];
 	tuis: Tui[];
@@ -42,6 +56,7 @@ export type Config = {
 
 export function defaultConfig(): Config {
 	return {
+		target: 'omarchy',
 		theme: { source: 'builtin', builtin: 'tokyo-night', url: '', backgroundImage: '' },
 		defaults: { browser: 'brave', agent: 'claude', terminal: 'ghostty', editor: 'nvim' },
 		plugins: [],
@@ -52,6 +67,11 @@ export function defaultConfig(): Config {
 		pacmanPackages: [],
 		aurPackages: [],
 		services: [],
+		browsers: [],
+		terminals: [],
+		editors: [],
+		ai: [],
+		gaming: [],
 		devEnvs: [],
 		webapps: [],
 		tuis: [],
@@ -106,6 +126,14 @@ export function checkConfig(c: Config): Issue[] {
 	const issues: Issue[] = [];
 	const err = (message: string) => issues.push({ level: 'error', message });
 	const warn = (message: string) => issues.push({ level: 'warning', message });
+
+	if (!BROWSERS.some((b) => b.value === c.defaults.browser))
+		err(`Browser "${c.defaults.browser}" isn't offered by Omarchy ${omarchy.version}; pick another one.`);
+	if (!TERMINALS.some((t) => t.value === c.defaults.terminal))
+		err(`Terminal "${c.defaults.terminal}" isn't offered by Omarchy ${omarchy.version}; pick another one.`);
+
+	if (c.theme.source === 'builtin' && c.target === 'try-omarchy' && !TRY_OMARCHY_THEMES.includes(c.theme.builtin))
+		err(`Try Omarchy doesn't ship the ${c.theme.builtin} theme; pick one of ${TRY_OMARCHY_THEMES.join(', ')}.`);
 
 	if (c.theme.source !== 'builtin') {
 		const u = validate.themeUrl(c.theme.url);
@@ -175,6 +203,30 @@ export function themeNameFromUrl(url: string): string {
 		.toLowerCase();
 }
 
+/**
+ * Editors to install, in menu order: the ticked ones plus the default editor when it isn't
+ * preinstalled (like the default browser and terminal, it has to be installed to be usable).
+ * Ids the current Omarchy data no longer knows are dropped.
+ */
+export function installedEditors(c: Config): string[] {
+	const wanted = new Set(c.editors);
+	const forDefault = DEFAULT_EDITOR_INSTALL[c.defaults.editor];
+	if (forDefault) wanted.add(forDefault);
+	return EDITOR_INSTALLS.map((o) => o.value).filter((id) => wanted.has(id));
+}
+
+/**
+ * A menu group's ticked ids in menu order, dropping ids the current Omarchy data no longer has.
+ * The default browser and terminal are left out: apply.sh installs those with the defaults.
+ */
+export function menuSelection(c: Config, group: MenuInstallGroup): string[] {
+	if (group === 'editors') return installedEditors(c);
+	const wanted = new Set(c[group]);
+	if (group === 'browsers') wanted.delete(c.defaults.browser);
+	if (group === 'terminals') wanted.delete(c.defaults.terminal);
+	return MENU_INSTALLS[group].entries.map((e) => e.id).filter((id) => wanted.has(id));
+}
+
 /** Renders the flat, comment-annotated YAML that `apply-config.sh` reads. */
 export function toYaml(c: Config): string {
 	const t = c.theme;
@@ -234,6 +286,13 @@ export function toYaml(c: Config): string {
 	out.push('# cmd: omarchy pkg add <package>\n' + list('pacman_packages', c.pacmanPackages));
 	out.push('# cmd: omarchy pkg aur add <package>\n' + list('aur_packages', c.aurPackages));
 	out.push('# cmd: omarchy install service <service>\n' + list('install_services', c.services));
+	for (const [group, m] of Object.entries(MENU_INSTALLS) as [MenuInstallGroup, (typeof MENU_INSTALLS)[MenuInstallGroup]][]) {
+		const args = new Map(m.entries.map((e) => [e.id, e.install]));
+		out.push(
+			`# cmd: omarchy <args> (from the Install > ${m.menu} menu); entries are id|args\n` +
+				list(m.yaml, menuSelection(c, group).map((id) => `${id}|${args.get(id)}`))
+		);
+	}
 	out.push('# cmd: omarchy install dev-env <env>\n' + list('install_dev_envs', c.devEnvs));
 	out.push(
 		'# "name|url|icon" (empty icon = the site\'s own)  cmd: omarchy webapp install <name> <url> <icon>\n' +
