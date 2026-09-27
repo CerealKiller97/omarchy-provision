@@ -1,45 +1,43 @@
 #!/usr/bin/env node
 /**
- * Extracts the community themes listed on omarchy.org/themes (themes/index.html in the
- * omarchy-site repo) and writes them to src/lib/community-themes.json. Output is deterministic
- * (sorted, no timestamps), so the file only changes when the list does. A Markdown summary of
- * what changed is printed to stdout; nothing is printed when the list is unchanged.
+ * Syncs the community themes listed on omarchy.org/themes (src/data/themes.json in the omarchy-site
+ * repo) into src/lib/community-themes.json, and their previews into static/themes/community/ as
+ * self-hosted thumbnails. Output is deterministic (sorted, no timestamps), so nothing changes unless
+ * the list or a preview does. A Markdown summary of what changed is printed to stdout; nothing is
+ * printed when everything is unchanged.
  *
  * Env: SITE_REPO (default omacom/omarchy-site), SITE_REF (default master),
  *      GITHUB_TOKEN (optional, raises the API rate limit).
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
+import { syncThumbnails } from './lib/thumbnails.mjs';
 
 const REPO = process.env.SITE_REPO || 'omacom/omarchy-site';
 const REF = process.env.SITE_REF || 'master';
-const PAGE = 'themes/index.html';
+const DATA = 'src/data/themes.json';
 const OUT = new URL('../src/lib/community-themes.json', import.meta.url);
+const IMAGES = new URL('../static/themes/community/', import.meta.url);
 
 const headers = {
-	Accept: 'application/vnd.github.raw+json',
+	Accept: 'application/vnd.github+json',
 	'User-Agent': 'omarchy-provision-sync',
 	...(process.env.GITHUB_TOKEN && { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` })
 };
 
-const url = `https://api.github.com/repos/${REPO}/contents/${PAGE}?ref=${encodeURIComponent(REF)}`;
-const res = await fetch(url, { headers });
-if (!res.ok) throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`);
-const html = await res.text();
+async function get(url, parse) {
+	const res = await fetch(url, { headers });
+	if (!res.ok) throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`);
+	return parse(res);
+}
 
-const decode = (s) =>
-	s
-		.replace(/&amp;/g, '&')
-		.replace(/&lt;/g, '<')
-		.replace(/&gt;/g, '>')
-		.replace(/&quot;/g, '"')
-		.replace(/&#39;/g, "'")
-		.trim();
+const api = (path) => get(`https://api.github.com/repos/${REPO}${path}`, (r) => r.json());
+// Pinned to one commit so the theme list and its preview images always match each other.
+const raw = (sha, path, parse) => get(`https://raw.githubusercontent.com/${REPO}/${sha}/${path}`, parse);
 
 /** The name omarchy-theme-install gives a theme: repo basename minus `omarchy-` / `-theme`. */
 const installName = (repoUrl) =>
 	repoUrl
-		.replace(/\/+$/, '')
 		.split('/')
 		.pop()
 		.replace(/\.git$/, '')
@@ -47,34 +45,50 @@ const installName = (repoUrl) =>
 		.replace(/-theme$/, '')
 		.toLowerCase();
 
+const { sha } = await api(`/commits/${encodeURIComponent(REF)}`);
+const [list, { tree }] = await Promise.all([
+	raw(sha, DATA, (r) => r.json()),
+	api(`/git/trees/${sha}?recursive=1`)
+]);
+// Blob shas of every file at this commit; they identify each preview's exact content.
+const blobs = new Map(tree.map((e) => [e.path, e.sha]));
+
 const themes = [];
-for (const [, figure] of html.matchAll(/<figure class="themes__theme">([\s\S]*?)<\/figure>/g)) {
-	const repo = figure.match(/<a href="([^"]+)"/)?.[1]?.replace(/\/+$/, '');
-	const image = figure.match(/<img src="([^"]+)"/)?.[1];
-	const name = figure.match(/<figcaption>[\s\S]*?>([^<]+)<\/a>/)?.[1];
-	if (!repo || !name || !/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(repo)) {
-		console.error(`Skipping unrecognised theme entry: ${figure.replace(/\s+/g, ' ').slice(0, 160)}`);
+const previews = [];
+for (const entry of list) {
+	const url = String(entry.repo ?? '').replace(/\/+$/, '');
+	const name = String(entry.name ?? '').trim();
+	if (!name || !/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(url)) {
+		console.error(`Skipping unrecognised theme entry: ${JSON.stringify(entry)}`);
 		continue;
 	}
-	const slug = installName(repo);
+	const slug = installName(url);
 	if (!/^[a-z0-9_][a-z0-9._+-]*$/.test(slug)) {
-		console.error(`Skipping ${repo}: install name "${slug}" is not valid`);
+		console.error(`Skipping ${url}: install name "${slug}" is not valid`);
 		continue;
 	}
-	themes.push({
-		name: decode(name),
-		slug,
-		author: repo.split('/')[3],
-		url: repo,
-		// Site-relative; the UI serves it from omarchy.org, which is built from this repo.
-		image: image ?? null
-	});
+	// Site-absolute (/assets/themes/x.webp), i.e. relative to the repo root.
+	const path = String(entry.image ?? '').replace(/^\/+/, '');
+	const key = path.split('/').pop().replace(/\.\w+$/, '');
+	if (path && blobs.has(path)) {
+		previews.push({ key, sha: blobs.get(path), fetch: () => raw(sha, path, (r) => r.arrayBuffer()) });
+	} else {
+		console.error(`No preview for ${name}: "${entry.image}" is not in ${REPO}@${sha.slice(0, 7)}`);
+	}
+	themes.push({ name, slug, author: url.split('/')[3], url, key: blobs.has(path) ? key : null });
 }
 
-themes.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }) || a.url.localeCompare(b.url));
 if (themes.length < 10) throw new Error(`Only ${themes.length} themes parsed, refusing to write`);
+themes.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }) || a.url.localeCompare(b.url));
 
-const next = { source: `${REPO}@${REF}/${PAGE}`, themes };
+const files = await syncThumbnails(IMAGES, previews);
+for (const t of themes) {
+	// Relative to static/, so the UI can resolve it under any base path.
+	t.image = t.key ? `themes/community/${files.get(t.key)}` : null;
+	delete t.key;
+}
+
+const next = { source: `${REPO}@${REF}/${DATA}`, themes };
 const json = JSON.stringify(next, null, '\t') + '\n';
 const prev = await readFile(OUT, 'utf8')
 	.then(JSON.parse)
@@ -94,13 +108,14 @@ const before = byUrl(prev.themes ?? []);
 const after = byUrl(themes);
 const added = themes.filter((t) => !before.has(t.url)).map((t) => t.name);
 const removed = [...before.values()].filter((t) => !after.has(t.url)).map((t) => t.name);
-const changed = themes
-	.filter((t) => before.has(t.url) && JSON.stringify(before.get(t.url)) !== JSON.stringify(t))
-	.map((t) => t.name);
+const changed = themes.filter((t) => before.has(t.url) && JSON.stringify(before.get(t.url)) !== JSON.stringify(t));
+const repreviewed = changed.filter((t) => before.get(t.url).image !== t.image).map((t) => t.name);
+const renamed = changed.filter((t) => before.get(t.url).image === t.image).map((t) => t.name);
 
 const lines = [];
 if (added.length) lines.push(`- community themes added: ${added.join(', ')}`);
 if (removed.length) lines.push(`- community themes removed: ${removed.join(', ')}`);
-if (changed.length) lines.push(`- community themes updated: ${changed.join(', ')}`);
+if (repreviewed.length) lines.push(`- community theme previews updated: ${repreviewed.join(', ')}`);
+if (renamed.length) lines.push(`- community themes updated: ${renamed.join(', ')}`);
 if (!lines.length) lines.push('- community theme list metadata changed');
 console.log(lines.join('\n'));

@@ -5,6 +5,8 @@
  * contain valid options.
  */
 
+import { asset } from '$app/paths';
+import type { Asset } from '$app/types';
 import omarchy from './omarchy.json';
 import community from './community-themes.json';
 import type { SimpleIcon } from 'simple-icons';
@@ -125,6 +127,8 @@ export type ThemePalette = {
 	cyan?: string;
 	blue?: string;
 	magenta?: string;
+	/** Self-hosted preview thumbnail, relative to static/. */
+	preview?: string;
 };
 
 /** Theme palettes from each theme's colors.toml, synced by scripts/sync-omarchy.mjs. */
@@ -136,15 +140,16 @@ export type CommunityTheme = {
 	slug: string;
 	author: string;
 	url: string;
+	/** Self-hosted preview thumbnail, relative to static/. */
 	image: string | null;
 };
 
 /** Community themes listed on omarchy.org/themes, synced by scripts/sync-community-themes.mjs. */
 export const COMMUNITY_THEMES: CommunityTheme[] = community.themes;
 
-/** omarchy.org is built from the omarchy-site repo, so its image paths resolve there. */
-export const communityThemeImage = (t: CommunityTheme) =>
-	t.image ? `https://omarchy.org${t.image}` : null;
+/** URL of a synced theme preview (`preview` / `image` above), honouring the base path. */
+export const themeImage = (path: string | null | undefined) =>
+	path ? asset(`/${path}` as Asset) : null;
 
 /** Themes shipped with Omarchy (`omarchy theme set <name>`), synced from upstream. */
 export const BUILTIN_THEMES: Option[] = Object.keys(THEME_PALETTES).map((value) => ({

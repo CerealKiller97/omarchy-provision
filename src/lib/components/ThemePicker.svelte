@@ -1,17 +1,20 @@
 <script lang="ts">
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import { cn } from '$lib/utils';
-	import { BUILTIN_THEMES, THEME_PALETTES } from '$lib/options';
+	import { BUILTIN_THEMES, THEME_PALETTES, themeImage } from '$lib/options';
 
 	let { value = $bindable() }: { value: string } = $props();
 
-	const SWATCHES = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta'] as const;
+	const SWATCHES = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta', 'accent'] as const;
+
+	let broken = $state<Record<string, boolean>>({});
 </script>
 
 <div role="radiogroup" aria-label="Built-in theme" class="grid grid-cols-2 gap-3 sm:grid-cols-3 2xl:grid-cols-4">
 	{#each BUILTIN_THEMES as t (t.value)}
 		{@const p = THEME_PALETTES[t.value]}
 		{@const on = value === t.value}
+		{@const src = themeImage(p.preview)}
 		<label
 			class={cn(
 				'group relative grid min-w-0 cursor-pointer grid-cols-1 gap-2 rounded-lg border p-2 transition-colors duration-150',
@@ -21,21 +24,34 @@
 		>
 			<input type="radio" class="sr-only" name="builtin-theme" value={t.value} bind:group={value} />
 
-			<!-- Miniature of the theme: background, two text lines, its six colors and accent. -->
+			<!-- The theme's own preview screenshot, with its six colors and accent as a strip below. -->
 			<div
-				class="flex h-20 flex-col justify-between rounded-md border border-black/5 p-3 dark:border-white/10"
+				class="grid overflow-hidden rounded-md border border-black/5 dark:border-white/10"
 				style:background-color={p.background}
 				aria-hidden="true"
 			>
-				<div class="grid gap-1">
-					<span class="h-1.5 w-12 rounded-full opacity-90" style:background-color={p.foreground}></span>
-					<span class="h-1.5 w-8 rounded-full opacity-40" style:background-color={p.foreground}></span>
+				<div class="aspect-video overflow-hidden">
+					{#if src && !broken[t.value]}
+						<img
+							{src}
+							alt=""
+							loading="lazy"
+							decoding="async"
+							class="size-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+							onerror={() => (broken[t.value] = true)}
+						/>
+					{:else}
+						<!-- No preview: a miniature of the theme's background and text. -->
+						<div class="grid content-start gap-1 p-3">
+							<span class="h-1.5 w-12 rounded-full opacity-90" style:background-color={p.foreground}></span>
+							<span class="h-1.5 w-8 rounded-full opacity-40" style:background-color={p.foreground}></span>
+						</div>
+					{/if}
 				</div>
-				<div class="flex items-center gap-1">
+				<div class="flex h-1.5">
 					{#each SWATCHES as c (c)}
-						<span class="size-2 rounded-full" style:background-color={p[c]}></span>
+						<span class="flex-1" style:background-color={p[c]}></span>
 					{/each}
-					<span class="ml-auto h-2 w-6 rounded-full" style:background-color={p.accent}></span>
 				</div>
 			</div>
 

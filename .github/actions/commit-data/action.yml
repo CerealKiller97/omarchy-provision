@@ -1,9 +1,9 @@
 name: Commit synced data
-description: Commits a generated data file if it changed, pushes it, and reports whether it did.
+description: Commits generated data files if they changed, pushes them, and reports whether it did.
 
 inputs:
-  path:
-    description: File to commit (repo-relative)
+  paths:
+    description: Space-separated files or directories to commit (repo-relative)
     required: true
   title:
     description: Commit subject line
@@ -23,12 +23,13 @@ runs:
     - id: commit
       shell: bash
       env:
-        DATA_PATH: ${{ inputs.path }}
+        DATA_PATHS: ${{ inputs.paths }}
         TITLE: ${{ inputs.title }}
         SUMMARY: ${{ inputs.summary-file }}
       run: |
-        if git diff --quiet -- "$DATA_PATH" && [ -z "$(git ls-files --others -- "$DATA_PATH")" ]; then
-          echo "$DATA_PATH unchanged." | tee -a "$GITHUB_STEP_SUMMARY"
+        read -ra paths <<< "$DATA_PATHS"
+        if git diff --quiet -- "${paths[@]}" && [ -z "$(git ls-files --others --exclude-standard -- "${paths[@]}")" ]; then
+          echo "$DATA_PATHS unchanged." | tee -a "$GITHUB_STEP_SUMMARY"
           echo "changed=false" >> "$GITHUB_OUTPUT"
           exit 0
         fi
@@ -38,10 +39,10 @@ runs:
 
         git config user.name "github-actions[bot]"
         git config user.email "41898233+github-actions[bot]@users.noreply.github.com"
-        git add "$DATA_PATH"
+        git add -A -- "${paths[@]}"
         git commit -F "$RUNNER_TEMP/commit-msg"
 
-        # The other sync workflow may have pushed meanwhile; it touches a different file,
+        # The other sync workflow may have pushed meanwhile; it touches different files,
         # so a rebase always applies cleanly.
         for attempt in 1 2 3; do
           git pull --rebase && git push && break

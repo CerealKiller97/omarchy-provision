@@ -28,11 +28,19 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.6.0
+
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: pnpm
 
-      - name: Fetch Omarchy release, packages and themes
+      # sharp encodes the self-hosted preview thumbnails.
+      - run: pnpm install --frozen-lockfile
+
+      - name: Fetch Omarchy release packages, themes and previews
         id: fetch
         run: |
           node scripts/sync-omarchy.mjs | tee "$RUNNER_TEMP/changes.md"
@@ -44,7 +52,7 @@ jobs:
         id: commit
         uses: ./.github/actions/commit-data
         with:
-          path: src/lib/omarchy.json
+          paths: src/lib/omarchy.json static/themes/builtin
           title: "chore: sync Omarchy data (${{ steps.fetch.outputs.version }})"
           summary-file: ${{ runner.temp }}/changes.md
 

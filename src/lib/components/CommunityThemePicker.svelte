@@ -6,7 +6,7 @@
 	import ImageOffIcon from '@lucide/svelte/icons/image-off';
 	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils';
-	import { COMMUNITY_THEMES, communityThemeImage } from '$lib/options';
+	import { COMMUNITY_THEMES, themeImage } from '$lib/options';
 
 	/** Bound to the theme's repo URL, which is what omarchy-theme-install takes. */
 	let { value = $bindable() }: { value: string } = $props();
@@ -66,7 +66,7 @@
 		<div role="radiogroup" aria-label="Community theme" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
 			{#each visible as t (t.url)}
 				{@const on = value === t.url}
-				{@const src = communityThemeImage(t)}
+				{@const src = themeImage(t.image)}
 				<label
 					class={cn(
 						'group relative grid min-w-0 cursor-pointer grid-cols-1 gap-2 rounded-lg border p-2 transition-colors duration-150',

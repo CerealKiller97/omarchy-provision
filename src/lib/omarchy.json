@@ -1,6 +1,6 @@
 {
 	"repo": "basecamp/omarchy",
-	"ref": "quattro",
+	"ref": "v4.0.4",
 	"version": "4.0.4",
 	"packages": {
 		"base": [
@@ -29,7 +29,6 @@
 			"dosfstools",
 			"dotnet-runtime",
 			"dua-cli",
-			"elsewhen",
 			"evince",
 			"exfatprogs",
 			"expac",
@@ -98,10 +97,7 @@
 			"omacalc",
 			"omacut",
 			"omarchy-nvim",
-			"omasnap",
 			"omawrite",
-			"owe",
-			"owe-lockfeed",
 			"pacman-contrib",
 			"pamixer",
 			"pinta",
@@ -123,6 +119,7 @@
 			"starship",
 			"sushi",
 			"system-config-printer",
+			"tensaku",
 			"tesseract",
 			"tesseract-data-eng",
 			"tldr",
@@ -139,7 +136,6 @@
 			"unzip",
 			"usage",
 			"uwsm",
-			"vi",
 			"whois",
 			"wireless-regdb",
 			"wireplumber",
@@ -166,7 +162,6 @@
 			"broadcom-wl-dkms",
 			"btrfs-progs",
 			"dell-xps-touchpad-haptics",
-			"dell-xps13-sidecar-amps",
 			"dkms",
 			"egl-wayland",
 			"gst-plugin-pipewire",
@@ -228,7 +223,8 @@
 			"green": "#a6e3a1",
 			"cyan": "#94e2d5",
 			"blue": "#89b4fa",
-			"magenta": "#f5c2e7"
+			"magenta": "#f5c2e7",
+			"preview": "themes/builtin/catppuccin-cf75f139.webp"
 		},
 		"catppuccin-latte": {
 			"mode": "light",
@@ -240,7 +236,8 @@
 			"green": "#40a02b",
 			"cyan": "#179299",
 			"blue": "#1e66f5",
-			"magenta": "#ea76cb"
+			"magenta": "#ea76cb",
+			"preview": "themes/builtin/catppuccin-latte-d3ef70e8.webp"
 		},
 		"ethereal": {
 			"mode": "dark",
@@ -252,7 +249,8 @@
 			"green": "#92a593",
 			"cyan": "#a3bfd1",
 			"blue": "#7d82d9",
-			"magenta": "#c89dc1"
+			"magenta": "#c89dc1",
+			"preview": "themes/builtin/ethereal-b9b413cd.webp"
 		},
 		"everforest": {
 			"mode": "dark",
@@ -264,7 +262,8 @@
 			"green": "#a7c080",
 			"cyan": "#83c092",
 			"blue": "#7fbbb3",
-			"magenta": "#d699b6"
+			"magenta": "#d699b6",
+			"preview": "themes/builtin/everforest-f328fa5b.webp"
 		},
 		"flexoki-light": {
 			"mode": "light",
@@ -276,7 +275,8 @@
 			"green": "#879a39",
 			"cyan": "#3aa99f",
 			"blue": "#205ea6",
-			"magenta": "#ce5d97"
+			"magenta": "#ce5d97",
+			"preview": "themes/builtin/flexoki-light-3a350a25.webp"
 		},
 		"gruvbox": {
 			"mode": "dark",
@@ -288,7 +288,8 @@
 			"green": "#a9b665",
 			"cyan": "#89b482",
 			"blue": "#7daea3",
-			"magenta": "#d3869b"
+			"magenta": "#d3869b",
+			"preview": "themes/builtin/gruvbox-1287fa25.webp"
 		},
 		"hackerman": {
 			"mode": "dark",
@@ -300,7 +301,8 @@
 			"green": "#4fe88f",
 			"cyan": "#7cf8f7",
 			"blue": "#829dd4",
-			"magenta": "#86a7df"
+			"magenta": "#86a7df",
+			"preview": "themes/builtin/hackerman-2d4c0c34.webp"
 		},
 		"kanagawa": {
 			"mode": "dark",
@@ -312,7 +314,8 @@
 			"green": "#76946a",
 			"cyan": "#6a9589",
 			"blue": "#7e9cd8",
-			"magenta": "#957fb8"
+			"magenta": "#957fb8",
+			"preview": "themes/builtin/kanagawa-67b1ac15.webp"
 		},
 		"last-horizon": {
 			"mode": "dark",
@@ -324,7 +327,8 @@
 			"green": "#87a9b0",
 			"cyan": "#a5a0b6",
 			"blue": "#b59790",
-			"magenta": "#c4d8e2"
+			"magenta": "#c4d8e2",
+			"preview": "themes/builtin/last-horizon-cffffd55.webp"
 		},
 		"lumon": {
 			"mode": "dark",
@@ -336,7 +340,8 @@
 			"green": "#5e95bc",
 			"cyan": "#b4e4f6",
 			"blue": "#6fb8e3",
-			"magenta": "#8bc9eb"
+			"magenta": "#8bc9eb",
+			"preview": "themes/builtin/lumon-9a87f6dd.webp"
 		},
 		"lupine": {
 			"mode": "light",
@@ -348,7 +353,8 @@
 			"green": "#4a2fd0",
 			"cyan": "#0c67de",
 			"blue": "#3264eb",
-			"magenta": "#8a4ad7"
+			"magenta": "#8a4ad7",
+			"preview": "themes/builtin/lupine-9a4c52b8.webp"
 		},
 		"matte-black": {
 			"mode": "dark",
@@ -360,7 +366,8 @@
 			"green": "#ffc107",
 			"cyan": "#bebebe",
 			"blue": "#e68e0d",
-			"magenta": "#d35f5f"
+			"magenta": "#d35f5f",
+			"preview": "themes/builtin/matte-black-ed9c7b47.webp"
 		},
 		"miasma": {
 			"mode": "dark",
@@ -372,7 +379,8 @@
 			"green": "#5f875f",
 			"cyan": "#c9a554",
 			"blue": "#78824b",
-			"magenta": "#bb7744"
+			"magenta": "#bb7744",
+			"preview": "themes/builtin/miasma-e080d82a.webp"
 		},
 		"nord": {
 			"mode": "dark",
@@ -384,7 +392,8 @@
 			"green": "#a3be8c",
 			"cyan": "#88c0d0",
 			"blue": "#81a1c1",
-			"magenta": "#b48ead"
+			"magenta": "#b48ead",
+			"preview": "themes/builtin/nord-57d50351.webp"
 		},
 		"osaka-jade": {
 			"mode": "dark",
@@ -396,7 +405,8 @@
 			"green": "#549e6a",
 			"cyan": "#2dd5b7",
 			"blue": "#509475",
-			"magenta": "#d2689c"
+			"magenta": "#d2689c",
+			"preview": "themes/builtin/osaka-jade-c1fe99f7.webp"
 		},
 		"retro-82": {
 			"mode": "dark",
@@ -408,7 +418,8 @@
 			"green": "#028391",
 			"cyan": "#8cbfb8",
 			"blue": "#3f8f8a",
-			"magenta": "#3f8f8a"
+			"magenta": "#3f8f8a",
+			"preview": "themes/builtin/retro-82-328ae9f0.webp"
 		},
 		"ristretto": {
 			"mode": "dark",
@@ -420,7 +431,8 @@
 			"green": "#adda78",
 			"cyan": "#85dacc",
 			"blue": "#f38d70",
-			"magenta": "#a8a9eb"
+			"magenta": "#a8a9eb",
+			"preview": "themes/builtin/ristretto-978b80fb.webp"
 		},
 		"rose-pine": {
 			"mode": "light",
@@ -432,7 +444,8 @@
 			"green": "#286983",
 			"cyan": "#d7827e",
 			"blue": "#56949f",
-			"magenta": "#907aa9"
+			"magenta": "#907aa9",
+			"preview": "themes/builtin/rose-pine-e5fa45a8.webp"
 		},
 		"solitude": {
 			"mode": "dark",
@@ -444,7 +457,8 @@
 			"green": "#9fa5a9",
 			"cyan": "#707070",
 			"blue": "#798186",
-			"magenta": "#aeaeae"
+			"magenta": "#aeaeae",
+			"preview": "themes/builtin/solitude-010c4448.webp"
 		},
 		"tokyo-night": {
 			"mode": "dark",
@@ -456,7 +470,8 @@
 			"green": "#9ece6a",
 			"cyan": "#449dab",
 			"blue": "#7aa2f7",
-			"magenta": "#ad8ee6"
+			"magenta": "#ad8ee6",
+			"preview": "themes/builtin/tokyo-night-8f5f7e3b.webp"
 		},
 		"vantablack": {
 			"mode": "dark",
@@ -468,7 +483,8 @@
 			"green": "#b6b6b6",
 			"cyan": "#b0b0b0",
 			"blue": "#8d8d8d",
-			"magenta": "#9b9b9b"
+			"magenta": "#9b9b9b",
+			"preview": "themes/builtin/vantablack-e6a3a72e.webp"
 		},
 		"white": {
 			"mode": "light",
@@ -480,7 +496,8 @@
 			"green": "#3a3a3a",
 			"cyan": "#3e3e3e",
 			"blue": "#1a1a1a",
-			"magenta": "#2e2e2e"
+			"magenta": "#2e2e2e",
+			"preview": "themes/builtin/white-597b3c41.webp"
 		}
 	}
 }
