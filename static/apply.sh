@@ -365,8 +365,18 @@ apply_install_services() {
     local service
     while IFS= read -r service; do
         [[ -n "$service" ]] || continue
-        log_info "omarchy install service $service"
-        omarchy install service "$service" || log_error "Failed to install service '$service'; skipping."
+        case "$service" in
+            # Entries in Omarchy's Install > Service menu without an omarchy-install-service-* script.
+            bitwarden)
+                log_info "omarchy pkg add bitwarden bitwarden-cli"
+                omarchy pkg add bitwarden bitwarden-cli ;;
+            chromium-account)
+                log_info "omarchy install chromium-google-account"
+                omarchy install chromium-google-account ;;
+            *)
+                log_info "omarchy install service $service"
+                omarchy install service "$service" ;;
+        esac || log_error "Failed to install service '$service'; skipping."
     done < <(yaml_list install_services)
     log_success "Services processed."
 }

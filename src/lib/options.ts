@@ -14,6 +14,7 @@ import {
 	si1password,
 	siAlacritty,
 	siBasecamp,
+	siBitwarden,
 	siBrave,
 	siBun,
 	siClaude,
@@ -30,6 +31,7 @@ import {
 	siGithubcopilot,
 	siGnuemacs,
 	siGo,
+	siGoogle,
 	siGooglechrome,
 	siGooglemaps,
 	siGooglemessages,
@@ -177,11 +179,6 @@ export const PREINSTALL_APPS: Option[] = [
 	{ value: 'omawrite', label: 'Omawrite', hint: 'Omarchy writing app' }
 ];
 
-/** Non-preinstall packages that are commonly removed. */
-export const OTHER_REMOVABLE_APPS: Option[] = [
-	{ value: 'chromium', label: 'Chromium', hint: 'Shipped as the default browser' }
-];
-
 const WEBAPP_BRANDS: Record<string, SimpleIcon | undefined> = {
 	Basecamp: siBasecamp,
 	Discord: siDiscord,
@@ -214,14 +211,20 @@ export const PREINSTALL_TUIS: Option[] = [
 	{ value: 'Docker', label: 'Docker', icon: siDocker }
 ];
 
+/**
+ * The Install › Service menu, in its order. Most map to `omarchy install service <value>`;
+ * static/apply.sh maps the two menu entries that have no omarchy-install-service-* script.
+ */
 export const SERVICES: Option[] = [
 	{ value: '1password', label: '1Password', icon: si1password },
 	{ value: 'dropbox', label: 'Dropbox', icon: siDropbox },
-	{ value: 'nordvpn', label: 'NordVPN', icon: siNordvpn },
-	{ value: 'signal', label: 'Signal', icon: siSignal },
 	{ value: 'spotify', label: 'Spotify', icon: siSpotify },
-	{ value: 'sunshine', label: 'Sunshine', hint: 'Game streaming host' },
-	{ value: 'tailscale', label: 'Tailscale', icon: siTailscale }
+	{ value: 'signal', label: 'Signal', icon: siSignal },
+	{ value: 'tailscale', label: 'Tailscale', icon: siTailscale },
+	{ value: 'nordvpn', label: 'NordVPN', icon: siNordvpn },
+	{ value: 'once', label: 'ONCE', hint: 'Self-hosted 37signals apps' },
+	{ value: 'bitwarden', label: 'Bitwarden', icon: siBitwarden },
+	{ value: 'chromium-account', label: 'Chromium Account', hint: 'Google sign-in for Chromium', icon: siGoogle }
 ];
 
 const DEV_ENV_BRANDS: Record<string, SimpleIcon> = {

@@ -108,7 +108,7 @@
 			? O.PREINSTALL_APPS.length + O.PREINSTALL_WEBAPPS.length + O.PREINSTALL_TUIS.length
 			: config.preinstalls === 'some'
 				? config.removeApps.length + config.removeWebApps.length + config.removeTuis.length
-				: config.removeApps.filter((a) => O.OTHER_REMOVABLE_APPS.some((o) => o.value === a)).length
+				: 0
 	);
 
 	const SECTIONS: { id: string; label: string; icon: Component; count: () => number }[] = [
@@ -328,10 +328,9 @@
 							<div class="grid gap-4 sm:grid-cols-2">
 								<div class="grid gap-2 sm:col-span-2">
 									<Label for="theme-url">Repository URL</Label>
-									<Input
+									<UrlInput
 										id="theme-url"
-										class="font-mono text-sm"
-										placeholder="https://github.com/Ahmad-Mtr/omarchy-temerald-theme"
+										placeholder="github.com/Ahmad-Mtr/omarchy-temerald-theme"
 										bind:value={config.theme.url}
 										aria-invalid={urlError ? true : undefined}
 										aria-describedby="theme-url-help"
@@ -398,24 +397,6 @@
 								</div>
 							</div>
 						{/if}
-
-						<!-- Chromium is not a "preinstall", so it is offered in every mode. -->
-						<div class="border-t pt-4">
-							{#each O.OTHER_REMOVABLE_APPS as o (o.value)}
-								<ToggleRow
-									id="rm-other-{o.value}"
-									label="Remove {o.label}"
-									description={o.hint}
-									bind:checked={
-										() => config.removeApps.includes(o.value),
-										(on) =>
-											(config.removeApps = on
-												? [...config.removeApps, o.value]
-												: config.removeApps.filter((a) => a !== o.value))
-									}
-								/>
-							{/each}
-						</div>
 					</div>
 				</Section>
 

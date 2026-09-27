@@ -7,7 +7,6 @@ import {
 	PREINSTALL_APPS,
 	PREINSTALL_TUIS,
 	PREINSTALL_WEBAPPS,
-	OTHER_REMOVABLE_APPS,
 	SERVICES,
 	TERMINALS,
 	type PreinstallMode
@@ -120,9 +119,6 @@ export function checkConfig(c: Config): Issue[] {
 	const removed = new Set(c.removeApps);
 	if (c.preinstalls === 'all') PREINSTALL_APPS.forEach((a) => removed.add(a.value));
 
-	if (removed.has('chromium') && c.defaults.browser === 'chromium')
-		err('Chromium is set as the default browser but is also being removed.');
-
 	for (const pkg of c.pacmanPackages)
 		if (c.aurPackages.includes(pkg)) err(`"${pkg}" is listed as both a pacman and an AUR package.`);
 	for (const pkg of [...c.pacmanPackages, ...c.aurPackages])
@@ -227,9 +223,8 @@ export function toYaml(c: Config): string {
 	);
 
 	const some = c.preinstalls === 'some';
-	const pkgs = c.removeApps.filter(
-		(a) => some || OTHER_REMOVABLE_APPS.some((o) => o.value === a)
-	);
+	// Only preinstalls, so a stale value from an older saved config never reaches the export.
+	const pkgs = some ? c.removeApps.filter((a) => PREINSTALL_APPS.some((o) => o.value === a)) : [];
 	out.push('# cmd: omarchy pkg drop <app>\n' + list('remove_apps', pkgs));
 	out.push(
 		'# cmd: omarchy webapp remove <web-app>\n' + list('remove_web_apps', some ? c.removeWebApps : [])
