@@ -7,5 +7,7 @@ export const SITE = {
 		'Omarchy already installs in minutes. Pick your theme, apps and tools once, export omarchy.yml, and let it provision the rest.',
 	/** Absolute site URL (the SITE_URL Actions variable), set by the deploy workflow. */
 	url: ((import.meta.env.VITE_SITE_URL as string | undefined) ?? '').replace(/\/$/, ''),
-	author: { name: 'Stefan Bogdanović', url: 'https://stefanbogdanovic.dev' }
+	author: { name: 'Stefan Bogdanović', url: 'https://stefanbogdanovic.dev' },
+	/** Where to report vulnerabilities; published as `Contact` in /.well-known/security.txt. */
+	securityContact: 'https://stefanbogdanovic.dev/contact'
 };

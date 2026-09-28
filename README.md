@@ -47,6 +47,7 @@ pnpm build    # static site in ./build (adapter-static)
 | `src/lib/config.ts` | Config type, field validators, cross-field checks (`checkConfig`) and the YAML generator (`toYaml`). |
 | `src/lib/components/` | `OptionSelect`, `CheckGroup`, `TagInput`; `ui/` is shadcn-svelte. |
 | `src/routes/+page.svelte` | The form and live YAML preview. |
+| `src/routes/{sitemap.xml,robots.txt,.well-known/security.txt}/+server.ts` | Generated at build time from `SITE_URL` (absolute URLs) and `SITE.securityContact` in `src/lib/site.ts`. security.txt's `Expires` is set 360 days out on every build, so each deploy renews it. |
 
 ## Validation
 
