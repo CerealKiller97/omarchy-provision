@@ -33,6 +33,8 @@
 	import FileCodeIcon from '@lucide/svelte/icons/file-code';
 	import SquarePenIcon from '@lucide/svelte/icons/square-pen';
 	import StarIcon from '@lucide/svelte/icons/star';
+	import ZapIcon from '@lucide/svelte/icons/zap';
+	import FolderGit2Icon from '@lucide/svelte/icons/folder-git-2';
 	import { siGithub } from 'simple-icons';
 	import CompassIcon from '@lucide/svelte/icons/compass';
 	import TerminalWindowIcon from '@lucide/svelte/icons/terminal';
@@ -322,11 +324,25 @@
 
 		<!-- ── Form ─────────────────────────────────────────────────────────────── -->
 		<div class="grid min-w-0 gap-8">
-			<div class="grid gap-2">
-				<h1 class="text-[32px] leading-10 font-semibold tracking-tight">Build your omarchy.yml</h1>
+			<div class="grid justify-items-start gap-3">
+				<p class="bg-muted inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium">
+					<ZapIcon class="size-3.5 fill-amber-400 text-amber-400" aria-hidden="true" />
+					<span>Omarchy is fast. Your setup is <span class="text-amber-600 dark:text-amber-400">even faster</span>.</span>
+				</p>
+				<h1 class="text-[32px] leading-10 font-semibold tracking-tight sm:text-[40px] sm:leading-[48px]">
+					Build your omarchy.yml
+				</h1>
 				<p class="text-muted-foreground max-w-2xl text-base">
 					Choose a theme, defaults, apps and launchers. Every value is checked against the
 					<code class="text-foreground font-mono text-sm">omarchy</code> CLI, so the file applies cleanly.
+				</p>
+				<p class="text-foreground flex max-w-2xl items-start gap-2 text-base font-medium">
+					<FolderGit2Icon class="mt-0.5 size-5 shrink-0" aria-hidden="true" />
+					<span>
+						Commit it to your dotfiles repo, and every fresh install is
+						<span class="underline decoration-amber-400 decoration-2 underline-offset-4">one command</span>
+						away from your setup.
+					</span>
 				</p>
 			</div>
 
@@ -783,7 +799,8 @@
 					</div>
 					<p class="text-muted-foreground text-xs">
 						It finds <code class="text-foreground font-mono">omarchy.yml</code> in the current folder or
-						<code class="text-foreground font-mono">~/Downloads</code>.
+						<code class="text-foreground font-mono">~/Downloads</code>. Keep the file in your dotfiles and
+						run it from there on every new machine.
 					</p>
 				</div>
 			</div>
