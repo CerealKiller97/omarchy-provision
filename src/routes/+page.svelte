@@ -49,6 +49,7 @@
 	import CircleAlertIcon from '@lucide/svelte/icons/circle-alert';
 	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
 	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
+	import { trackExport } from '$lib/analytics';
 	import { checkConfig, defaultConfig, installedEditors, menuSelection, themeNameFromUrl, toYaml, validate, type Config } from '$lib/config';
 	import * as O from '$lib/options';
 	import { cn } from '$lib/utils';
@@ -161,6 +162,7 @@
 	async function copyYaml() {
 		try {
 			await navigator.clipboard.writeText(yaml);
+			trackExport(config, yaml, 'copy');
 			copied = true;
 			setTimeout(() => (copied = false), 1500);
 		} catch {
@@ -183,6 +185,7 @@
 		const a = Object.assign(document.createElement('a'), { href: url, download: 'omarchy.yml' });
 		a.click();
 		URL.revokeObjectURL(url);
+		trackExport(config, yaml, 'download');
 	}
 
 	// Reset asks for a second click so a stray click can't wipe the whole config.
@@ -275,6 +278,7 @@
 			</a>
 			<a
 				href={SITE.repo}
+				data-umami-event="star-github"
 				target="_blank"
 				rel="noreferrer"
 				class="text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:ring-ring group inline-flex h-8 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors duration-150 outline-none focus-visible:ring-2 sm:px-3"
@@ -285,7 +289,7 @@
 				<span class="hidden sm:inline">Star</span>
 			</a>
 			<ModeToggle />
-			<Button size="sm" onclick={download} disabled={errors.length > 0} aria-label="Download omarchy.yml">
+			<Button size="sm" onclick={download} disabled={errors.length > 0} aria-label="Download omarchy.yml" data-umami-event="download" data-umami-event-location="header">
 				<DownloadIcon class="size-4" /> <span class="hidden sm:inline">Download</span>
 			</Button>
 		</div>
@@ -751,10 +755,10 @@
 				<YamlCode code={yaml} class="bg-code text-code-foreground max-h-[28rem] min-h-0 flex-1 overflow-auto py-4 lg:max-h-none" />
 
 				<div class="flex items-center gap-2 border-t p-3">
-					<Button type="button" class="flex-1" onclick={download} disabled={errors.length > 0}>
+					<Button type="button" class="flex-1" onclick={download} disabled={errors.length > 0} data-umami-event="download" data-umami-event-location="preview">
 						<DownloadIcon class="size-4" /> Download
 					</Button>
-					<Button type="button" variant="outline" onclick={copyYaml} disabled={errors.length > 0} aria-live="polite">
+					<Button type="button" variant="outline" onclick={copyYaml} disabled={errors.length > 0} aria-live="polite" data-umami-event="copy-yaml">
 						{#if copied}<CheckIcon class="size-4" /> Copied{:else}<CopyIcon class="size-4" /> Copy{/if}
 					</Button>
 					<Button
@@ -790,6 +794,7 @@
 						<button
 							type="button"
 							onclick={copyCommand}
+							data-umami-event="copy-apply-command"
 							aria-label={copiedCommand ? 'Command copied' : 'Copy command'}
 							title="Copy command"
 							class="text-code-muted focus-visible:ring-ring grid size-8 shrink-0 place-items-center transition-colors duration-150 outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-inset"
