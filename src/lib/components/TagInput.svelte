@@ -26,9 +26,13 @@
 
 	function add() {
 		const v = normalize(draft);
-		if (!v) return;
+		if (!v) {
+			return;
+		}
 		error = validator(v) ?? (items.includes(v) ? 'Already added' : null);
-		if (error) return;
+		if (error) {
+			return;
+		}
 		items = [...items, v];
 		draft = '';
 	}

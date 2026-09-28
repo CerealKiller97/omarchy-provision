@@ -43,7 +43,9 @@ const headers = {
 
 async function get(url, parse) {
 	const res = await fetch(url, { headers });
-	if (!res.ok) throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`);
+	if (!res.ok) {
+		throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`);
+	}
 	return parse(res);
 }
 
@@ -86,8 +88,9 @@ function installArgs(action) {
 		const pkgs = shellWords(args[1] ?? '');
 		return pkgs.length && pkgs.every((p) => PACKAGE.test(p)) ? `pkg add ${pkgs.join(' ')}` : null;
 	}
-	if (/^omarchy-(?!launch-|menu-)[a-z0-9-]+$/.test(cmd ?? '') && args.every((a) => /^[\w.-]+$/.test(a)))
+	if (/^omarchy-(?!launch-|menu-)[a-z0-9-]+$/.test(cmd ?? '') && args.every((a) => /^[\w.-]+$/.test(a))) {
 		return [...cmd.replace(/^omarchy-/, '').split('-'), ...args].join(' ');
+	}
 	return null;
 }
 
@@ -122,7 +125,9 @@ const [{ tree }, menu, defaultBrowser, ...lists] = await Promise.all([
 	...Object.values(PACKAGE_LISTS).map((path) => raw(sha, path).then(parsePackages))
 ]);
 const packages = Object.fromEntries(Object.keys(PACKAGE_LISTS).map((k, i) => [k, lists[i]]));
-if (tree.truncated) throw new Error(`Tree of ${REPO}@${REF} is truncated, refusing to guess the theme list`);
+if (tree.truncated) {
+	throw new Error(`Tree of ${REPO}@${REF} is truncated, refusing to guess the theme list`);
+}
 
 // Blob shas of every file at this commit; they identify each preview's exact content.
 const blobs = new Map(tree.map((e) => [e.path, e.sha]));
@@ -159,7 +164,9 @@ const themes = Object.fromEntries(
  */
 const menuInstalls = (prefix, accept = () => true) =>
 	parseMenu(menu, prefix).flatMap(({ id, label, action, when, disabled }) => {
-		if (!when && !disabled) return [];
+		if (!when && !disabled) {
+			return [];
+		}
 		const install = installArgs(action);
 		// The script it runs must exist at this commit, so a renamed one is caught here, not on apply.
 		// Like the omarchy CLI, the longest leading run of words names the script; the rest are arguments.
@@ -177,7 +184,9 @@ const menuInstalls = (prefix, accept = () => true) =>
 const withSummaries = (entries) =>
 	Promise.all(
 		entries.map(async ({ script, ...entry }) => {
-			if (!script) return entry;
+			if (!script) {
+				return entry;
+			}
 			const summary = (await raw(sha, script)).match(/^# omarchy:summary=(.+)$/m)?.[1].trim().replace(/\.$/, '');
 			return summary ? { ...entry, summary } : entry;
 		})
@@ -199,9 +208,13 @@ const installable = new Map(
 );
 const browsers = browserIds.flatMap((id) => {
 	const b = installable.get(id);
-	if (b) return [{ id, label: b.label, install: b.install, preinstalled: false }];
+	if (b) {
+		return [{ id, label: b.label, install: b.install, preinstalled: false }];
+	}
 	// Not in the menu: only offered when Omarchy ships it, since nothing here could install it.
-	if (packages.base.includes(id)) return [{ id, label: id[0].toUpperCase() + id.slice(1), preinstalled: true }];
+	if (packages.base.includes(id)) {
+		return [{ id, label: id[0].toUpperCase() + id.slice(1), preinstalled: true }];
+	}
 	console.error(`Skipping browser "${id}": not in the Install > Browser menu and not preinstalled`);
 	return [];
 });
@@ -215,8 +228,9 @@ if (
 	!browsers.length ||
 	!ai.length ||
 	!gaming.length
-)
+) {
 	throw new Error('Upstream data looks empty, refusing to write');
+}
 
 const prev = await readFile(OUT, 'utf8')
 	.then(JSON.parse)
@@ -231,7 +245,9 @@ const tryOmarchy = await get(`https://raw.githubusercontent.com/${TRY_REPO}/HEAD
 		const missing = listed.filter((t) => !themes[t]);
 		if (missing.length) console.error(`Try Omarchy themes not in ${REF}, skipped: ${missing.join(', ')}`);
 		const offered = listed.filter((t) => themes[t]).sort();
-		if (!offered.length) throw new Error(`${TRY_SPEC} lists no known themes`);
+		if (!offered.length) {
+			throw new Error(`${TRY_SPEC} lists no known themes`);
+		}
 		return { repo: TRY_REPO, release: String(spec.upstream?.release ?? ''), themes: offered };
 	})
 	.catch((e) => {
@@ -242,7 +258,9 @@ const tryOmarchy = await get(`https://raw.githubusercontent.com/${TRY_REPO}/HEAD
 const next = { repo: REPO, ref: REF, version, packages, themes, browsers, editors, terminals, ai, gaming, tryOmarchy };
 
 const json = JSON.stringify(next, null, '\t') + '\n';
-if (prev && JSON.stringify(prev, null, '\t') + '\n' === json) process.exit(0);
+if (prev && JSON.stringify(prev, null, '\t') + '\n' === json) {
+	process.exit(0);
+}
 await writeFile(OUT, json);
 
 // ── Change summary ───────────────────────────────────────────────────────────

@@ -23,7 +23,9 @@
 	const contrast = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 
 	const colors = $derived.by(() => {
-		if (!icon) return '';
+		if (!icon) {
+			return '';
+		}
 		const l = luminance(icon.hex);
 		const pick = (surface: number) =>
 			contrast(l, surface) >= MIN_CONTRAST ? `#${icon.hex}` : 'currentColor';

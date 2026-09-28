@@ -11,7 +11,9 @@ const query = () => matchMedia('(prefers-color-scheme: dark)');
 function read(): Mode {
 	try {
 		const v = localStorage.getItem(KEY);
-		if (v === 'light' || v === 'dark') return v;
+		if (v === 'light' || v === 'dark') {
+			return v;
+		}
 	} catch {
 		/* storage unavailable */
 	}

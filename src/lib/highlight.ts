@@ -12,9 +12,15 @@ const ITEM = /^(\s*)(-)(\s+)(.*)$/;
 const PAIR = /^(\s*)([\w-]+)(:)(\s*)(.*)$/;
 
 function value(text: string): Token[] {
-	if (!text) return [];
-	if (text === 'true' || text === 'false') return [{ kind: 'bool', text }];
-	if (/^-?\d+(\.\d+)?$/.test(text)) return [{ kind: 'number', text }];
+	if (!text) {
+		return [];
+	}
+	if (text === 'true' || text === 'false') {
+		return [{ kind: 'bool', text }];
+	}
+	if (/^-?\d+(\.\d+)?$/.test(text)) {
+		return [{ kind: 'number', text }];
+	}
 	// Pipe-separated entries (webapps / tuis): highlight the separators.
 	return text
 		.split(/(\|)/)
@@ -24,19 +30,21 @@ function value(text: string): Token[] {
 
 function line(text: string): Token[] {
 	let m: RegExpMatchArray | null;
-	if ((m = text.match(COMMENT)))
+	if ((m = text.match(COMMENT))) {
 		return [
 			{ kind: 'plain', text: m[1] },
 			{ kind: 'comment', text: m[2] }
 		];
-	if ((m = text.match(ITEM)))
+	}
+	if ((m = text.match(ITEM))) {
 		return [
 			{ kind: 'plain', text: m[1] },
 			{ kind: 'punct', text: m[2] },
 			{ kind: 'plain', text: m[3] },
 			...value(m[4])
 		];
-	if ((m = text.match(PAIR)))
+	}
+	if ((m = text.match(PAIR))) {
 		return [
 			{ kind: 'plain', text: m[1] },
 			{ kind: 'key', text: m[2] },
@@ -44,6 +52,7 @@ function line(text: string): Token[] {
 			{ kind: 'plain', text: m[4] },
 			...value(m[5])
 		];
+	}
 	return [{ kind: 'plain', text }];
 }
 

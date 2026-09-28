@@ -94,7 +94,9 @@
 
 	$effect(() => {
 		const snapshot = JSON.stringify(config);
-		if (!ready) return;
+		if (!ready) {
+			return;
+		}
 		try {
 			localStorage.setItem(STORAGE_KEY, snapshot);
 		} catch {

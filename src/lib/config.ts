@@ -220,7 +220,9 @@ export function installedEditors(c: Config): string[] {
  * The default browser and terminal are left out: apply.sh installs those with the defaults.
  */
 export function menuSelection(c: Config, group: MenuInstallGroup): string[] {
-	if (group === 'editors') return installedEditors(c);
+	if (group === 'editors') {
+		return installedEditors(c);
+	}
 	const wanted = new Set(c[group]);
 	if (group === 'browsers') wanted.delete(c.defaults.browser);
 	if (group === 'terminals') wanted.delete(c.defaults.terminal);

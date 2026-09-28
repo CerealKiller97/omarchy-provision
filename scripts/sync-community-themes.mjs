@@ -27,7 +27,9 @@ const headers = {
 
 async function get(url, parse) {
 	const res = await fetch(url, { headers });
-	if (!res.ok) throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`);
+	if (!res.ok) {
+		throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`);
+	}
 	return parse(res);
 }
 
@@ -78,7 +80,9 @@ for (const entry of list) {
 	themes.push({ name, slug, author: url.split('/')[3], url, key: blobs.has(path) ? key : null });
 }
 
-if (themes.length < 10) throw new Error(`Only ${themes.length} themes parsed, refusing to write`);
+if (themes.length < 10) {
+	throw new Error(`Only ${themes.length} themes parsed, refusing to write`);
+}
 themes.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }) || a.url.localeCompare(b.url));
 
 const files = await syncThumbnails(IMAGES, previews);
@@ -93,7 +97,9 @@ const json = JSON.stringify(next, null, '\t') + '\n';
 const prev = await readFile(OUT, 'utf8')
 	.then(JSON.parse)
 	.catch(() => null);
-if (prev && JSON.stringify(prev, null, '\t') + '\n' === json) process.exit(0);
+if (prev && JSON.stringify(prev, null, '\t') + '\n' === json) {
+	process.exit(0);
+}
 await writeFile(OUT, json);
 
 // ── Change summary ───────────────────────────────────────────────────────────
