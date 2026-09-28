@@ -72,9 +72,16 @@ jobs:
             [ -n "${!name}" ] || { echo "::error::Missing secret $name (see the setup notes in deploy.yml)"; exit 1; }
           done
           install -d -m 700 ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          # Pasting into the secrets form can add CRLF line endings, which ssh can't parse.
+          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          # Fail here with a clear message instead of scp's "error in libcrypto" / "Permission denied".
+          if ! ssh-keygen -y -P '' -f ~/.ssh/deploy_key > ~/.ssh/deploy_key.pub 2>/dev/null; then
+            echo "::error::SSH_PRIVATE_KEY is not a usable private key. Paste the whole private key file (including the -----BEGIN/END OPENSSH PRIVATE KEY----- lines), not the .pub file, and use a key without a passphrase."
+            exit 1
+          fi
+          echo "Deploy key fingerprint: $(ssh-keygen -lf ~/.ssh/deploy_key.pub)"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
           cat > ~/.ssh/config <<EOF
           Host deploy
             HostName $SSH_HOST
@@ -119,4 +126,4 @@ jobs:
 
       - name: Clean up SSH key
         if: always()
-        run: rm -f ~/.ssh/deploy_key
+        run: rm -f ~/.ssh/deploy_key ~/.ssh/deploy_key.pub
