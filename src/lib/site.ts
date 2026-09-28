@@ -8,6 +8,8 @@ export const SITE = {
 	/** Absolute site URL (the SITE_URL Actions variable), set by the deploy workflow. */
 	url: ((import.meta.env.VITE_SITE_URL as string | undefined) ?? '').replace(/\/$/, ''),
 	author: { name: 'Stefan Bogdanović', url: 'https://stefanbogdanovic.dev' },
+	/** This project's GitHub repository (the header's Star button). */
+	repo: 'https://github.com/CerealKiller97/omarchy-provision',
 	/** Where to report vulnerabilities; published as `Contact` in /.well-known/security.txt. */
 	securityContact: 'https://stefanbogdanovic.dev/contact'
 };

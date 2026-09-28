@@ -32,6 +32,8 @@
 	import SettingsIcon from '@lucide/svelte/icons/settings-2';
 	import FileCodeIcon from '@lucide/svelte/icons/file-code';
 	import SquarePenIcon from '@lucide/svelte/icons/square-pen';
+	import StarIcon from '@lucide/svelte/icons/star';
+	import { siGithub } from 'simple-icons';
 	import CompassIcon from '@lucide/svelte/icons/compass';
 	import TerminalWindowIcon from '@lucide/svelte/icons/terminal';
 	import SparklesIcon from '@lucide/svelte/icons/sparkles';
@@ -268,6 +270,17 @@
 			>
 				<span class="bg-success size-1.5 rounded-full" aria-hidden="true"></span>
 				Omarchy <span class="text-foreground font-mono">v{omarchy.version}</span>
+			</a>
+			<a
+				href={SITE.repo}
+				target="_blank"
+				rel="noreferrer"
+				class="text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:ring-ring group inline-flex h-8 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors duration-150 outline-none focus-visible:ring-2 sm:px-3"
+				aria-label="Star {SITE.name} on GitHub"
+			>
+				<svg viewBox="0 0 24 24" class="size-3.5 fill-current" aria-hidden="true"><path d={siGithub.path} /></svg>
+				<StarIcon class="size-3.5 transition-colors duration-150 group-hover:fill-yellow-400 group-hover:text-yellow-400" />
+				<span class="hidden sm:inline">Star</span>
 			</a>
 			<ModeToggle />
 			<Button size="sm" onclick={download} disabled={errors.length > 0} aria-label="Download omarchy.yml">
