@@ -64,7 +64,8 @@ function selections(c: Config): [string, string[]][] {
 
 /**
  * Sends `export-config` with the single-value choices and counts, then one `option` event per
- * selected predefined item (`group` + `value`), so each option's popularity can be ranked in Umami.
+ * selected predefined item, so each option's popularity can be ranked in Umami. `pick` repeats the
+ * pair as `group/value`, so breaking the event down by `pick` shows every choice with its group.
  */
 export function trackExport(c: Config, yaml: string, via: 'download' | 'copy') {
 	const umami = typeof window === 'undefined' ? undefined : window.umami;
@@ -98,7 +99,7 @@ export function trackExport(c: Config, yaml: string, via: 'download' | 'copy') {
 
 	for (const [group, values] of groups) {
 		for (const value of values) {
-			umami.track('option', { group, value });
+			umami.track('option', { group, value, pick: `${group}/${value}` });
 		}
 	}
 }
