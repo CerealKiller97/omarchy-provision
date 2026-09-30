@@ -714,7 +714,7 @@
 	],
 	"tryOmarchy": {
 		"repo": "omacom/try-omarchy",
-		"release": "4.0.3",
+		"release": "4.0.4",
 		"themes": [
 			"catppuccin",
 			"gruvbox",
