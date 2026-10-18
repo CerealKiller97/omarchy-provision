@@ -1,7 +1,7 @@
 {
 	"repo": "basecamp/omarchy",
-	"ref": "v4.0.4",
-	"version": "4.0.4",
+	"ref": "v4.0.5",
+	"version": "4.0.5",
 	"packages": {
 		"base": [
 			"aether",
@@ -153,7 +153,7 @@
 			"zoxide"
 		],
 		"other": [
-			"apple-bcm-firmware",
+			"apple-bcm-firmware-fetcher",
 			"apple-t2-audio-config",
 			"asusctl",
 			"autoconf-archive",
@@ -179,6 +179,7 @@
 			"limine-mkinitcpio-hook",
 			"limine-snapper-sync",
 			"linux-firmware",
+			"linux-firmware-cirrus-dx13260",
 			"linux-firmware-marvell",
 			"linux-omarchy",
 			"linux-omarchy-headers",
