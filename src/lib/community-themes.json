@@ -163,6 +163,13 @@
 			"image": "themes/community/catppuccin-mocha-dark-f441f233.webp"
 		},
 		{
+			"name": "CGA",
+			"slug": "cga",
+			"author": "tsak",
+			"url": "https://github.com/tsak/omarchy-cga-theme",
+			"image": "themes/community/cga-3886d3b5.webp"
+		},
+		{
 			"name": "Cincinnati",
 			"slug": "cincinnati",
 			"author": "jkwuc89",
@@ -217,6 +224,13 @@
 			"author": "stannorbvb-cmd",
 			"url": "https://github.com/stannorbvb-cmd/cpunk",
 			"image": "themes/community/cpunk-42f20d21.webp"
+		},
+		{
+			"name": "Crimson",
+			"slug": "crimson",
+			"author": "PedroAugustoOK",
+			"url": "https://github.com/PedroAugustoOK/omarchy-crimson-theme",
+			"image": "themes/community/crimson-bfbb796e.webp"
 		},
 		{
 			"name": "Crimson Gold",
@@ -457,6 +471,13 @@
 			"image": "themes/community/japan-night-089b0c3c.webp"
 		},
 		{
+			"name": "Kupola",
+			"slug": "kupola",
+			"author": "Anhelm01",
+			"url": "https://github.com/Anhelm01/omarchy-kupola-theme",
+			"image": "themes/community/kupola-a20a3bed.webp"
+		},
+		{
 			"name": "Lamplight",
 			"slug": "lamplight",
 			"author": "thisisgm",
@@ -489,7 +510,7 @@
 			"slug": "matrix",
 			"author": "BVisagie",
 			"url": "https://github.com/BVisagie/omarchy-matrix-theme",
-			"image": "themes/community/matrix-29f26b7c.webp"
+			"image": "themes/community/matrix-1e496199.webp"
 		},
 		{
 			"name": "Mechanoonna",
@@ -553,6 +574,13 @@
 			"author": "brianblakely",
 			"url": "https://github.com/brianblakely/omarchy-naysayer-theme",
 			"image": "themes/community/naysayer-320ce046.webp"
+		},
+		{
+			"name": "Nedia",
+			"slug": "nedia",
+			"author": "aidenlangley",
+			"url": "https://github.com/aidenlangley/omarchy-nedia-theme",
+			"image": "themes/community/nedia-c17fc4d5.webp"
 		},
 		{
 			"name": "Neo Sploosh",
@@ -637,6 +665,13 @@
 			"author": "sc0ttman",
 			"url": "https://github.com/sc0ttman/omarchy-one-dark-pro-theme",
 			"image": "themes/community/one-dark-pro-fb8e5aec.webp"
+		},
+		{
+			"name": "Outpost",
+			"slug": "outpost",
+			"author": "simoz",
+			"url": "https://github.com/simoz/omarchy-outpost-theme",
+			"image": "themes/community/outpost-43d0b032.webp"
 		},
 		{
 			"name": "Oxo Carbon",
@@ -812,6 +847,13 @@
 			"author": "HANCORE-linux",
 			"url": "https://github.com/HANCORE-linux/omarchy-shadesofjade-theme",
 			"image": "themes/community/shades-of-jade-e285ce8b.webp"
+		},
+		{
+			"name": "Singularity",
+			"slug": "singularity",
+			"author": "simpleprim8",
+			"url": "https://github.com/simpleprim8/omarchy-singularity-theme",
+			"image": "themes/community/singularity-ebeeeea8.webp"
 		},
 		{
 			"name": "Snow",
