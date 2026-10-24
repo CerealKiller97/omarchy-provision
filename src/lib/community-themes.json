@@ -65,6 +65,13 @@
 			"image": "themes/community/aura-3ecf84a3.webp"
 		},
 		{
+			"name": "Autumn",
+			"slug": "autumn",
+			"author": "SirJul1337",
+			"url": "https://github.com/SirJul1337/omarchy-autumn-theme",
+			"image": "themes/community/autumn-e428de9f.webp"
+		},
+		{
 			"name": "Ayaka",
 			"slug": "ayaka",
 			"author": "abhijeet-swami",
@@ -149,11 +156,18 @@
 			"image": "themes/community/bluedotrb-e2ba0732.webp"
 		},
 		{
+			"name": "Bubblegum",
+			"slug": "bubblegum",
+			"author": "peterholko",
+			"url": "https://github.com/peterholko/omarchy-bubblegum-theme",
+			"image": "themes/community/bubblegum-dec613a7.webp"
+		},
+		{
 			"name": "Castle on a Lake",
 			"slug": "castle-on-a-lake",
 			"author": "shmall03",
 			"url": "https://github.com/shmall03/omarchy-castle-on-a-lake-theme",
-			"image": "themes/community/castle-on-a-lake-c27ea292.webp"
+			"image": "themes/community/castle-on-a-lake-0ebcaefa.webp"
 		},
 		{
 			"name": "Catppuccin Mocha Dark",
@@ -408,6 +422,13 @@
 			"image": "themes/community/green-garden-f020b2f1.webp"
 		},
 		{
+			"name": "Gruvbox Lady",
+			"slug": "gruvbox-lady",
+			"author": "Sinnohman",
+			"url": "https://github.com/Sinnohman/omarchy-gruvbox-lady-theme",
+			"image": "themes/community/gruvbox-lady-6c5a2cd0.webp"
+		},
+		{
 			"name": "Gruvbox Material",
 			"slug": "gruvbox-material",
 			"author": "curbol",
@@ -602,6 +623,13 @@
 			"author": "RiO7MAKK3R",
 			"url": "https://github.com/RiO7MAKK3R/omarchy-neovoid-theme",
 			"image": "themes/community/neovoid-0217e8c9.webp"
+		},
+		{
+			"name": "Neptune",
+			"slug": "neptune",
+			"author": "ishansing",
+			"url": "https://github.com/ishansing/omarchy-neptune-theme",
+			"image": "themes/community/neptune-b3613c7a.webp"
 		},
 		{
 			"name": "Neptune Blue",
@@ -898,6 +926,13 @@
 			"image": "themes/community/space-monkey-0ee03184.webp"
 		},
 		{
+			"name": "Spring",
+			"slug": "spring",
+			"author": "SirJul1337",
+			"url": "https://github.com/SirJul1337/omarchy-spring-theme",
+			"image": "themes/community/spring-ee4e1e42.webp"
+		},
+		{
 			"name": "Starry Night",
 			"slug": "starry-night",
 			"author": "juangalt",
@@ -966,6 +1001,13 @@
 			"author": "Justin-De-Sio",
 			"url": "https://github.com/Justin-De-Sio/omarchy-tokyoled-theme",
 			"image": "themes/community/tokyo-night-oled-d6176d94.webp"
+		},
+		{
+			"name": "Turner",
+			"slug": "turner",
+			"author": "simoz",
+			"url": "https://github.com/simoz/omarchy-turner-theme",
+			"image": "themes/community/turner-fda49805.webp"
 		},
 		{
 			"name": "Tycho",
